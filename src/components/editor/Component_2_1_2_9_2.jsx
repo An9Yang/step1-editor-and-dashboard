@@ -25,7 +25,7 @@ function Component_2_1_2_9_2() {
             ></path>
           </svg>
           <span className="text-center text-ellipsis [text-wrap-mode:nowrap] block overflow-x-hidden overflow-y-hidden caret-[#1c1c1c] [color-scheme:light]">
-            Connect Lovable Cloud
+            Connect Step1 Cloud
           </span>
         </button>
       </div>

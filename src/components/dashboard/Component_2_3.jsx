@@ -1,7 +1,7 @@
-function Component_2_3() {
+function Component_2_3({ isCollapsed }) {
   return (
     <div
-      className="ml-[-4px] relative flex items-center caret-[#1c1c1c] [color-scheme:light] pointer-events-none"
+      className={`ml-[-4px] relative flex items-center caret-[#1c1c1c] [color-scheme:light] ${isCollapsed ? 'justify-center' : ''}`}
       data-component-id="Component_2_3"
     >
       <div

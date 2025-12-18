@@ -20,7 +20,7 @@ function Component_2_1_2_7_1() {
       </li>
       <li className="list-outside caret-zinc-700 [color-scheme:light] pl-1.5">
         <strong className="text-zinc-900 font-[480] caret-zinc-900 [color-scheme:light]">
-          Connect Lovable Cloud
+          Connect Step1 Cloud
         </strong>
         : Add user accounts, product database, or newsletter signup
         functionality

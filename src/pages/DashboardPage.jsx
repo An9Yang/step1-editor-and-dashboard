@@ -11,7 +11,7 @@ function DashboardPage() {
 
   return (
     <>
-      <div className='bg-[#fcfbf8] text-[#1c1c1c] leading-normal [font-family:CameraPlainVariable,"CameraPlainVariable_Fallback",system-ui,sans-serif] min-h-[1024px] flex flex-col caret-[#1c1c1c] [color-scheme:light]'>
+      <div className='bg-[#fcfbf8] text-[#1c1c1c] leading-normal [font-family:CameraPlainVariable,"CameraPlainVariable_Fallback",system-ui,sans-serif] h-screen flex flex-col caret-[#1c1c1c] [color-scheme:light] overflow-hidden'>
         <div className="min-h-0 flex flex-col grow basis-[0%] caret-[#1c1c1c] [color-scheme:light]">
           <div className="bg-[#fcfbf8] caret-[#1c1c1c] [color-scheme:light]">
             <div className="h-full relative flex flex-col caret-[#1c1c1c] [color-scheme:light]">

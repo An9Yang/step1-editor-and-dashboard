@@ -19,7 +19,7 @@ function Component_2_1() {
             </span>
           </span>
           <span className="[text-wrap-mode:nowrap] block overflow-x-hidden overflow-y-hidden caret-[#1c1c1c] [color-scheme:light] rounded-br-[8px] rounded-t-[8px] rounded-bl-[8px]">
-            HaoCheng's Lovable
+            HaoCheng's Step1
           </span>
           <span className="[text-wrap-mode:nowrap] flex grow shrink-0 items-center gap-y-1.5 gap-x-1.5 caret-[#1c1c1c] [color-scheme:light] pr-2">
             <svg
