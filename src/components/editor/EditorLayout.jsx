@@ -14,8 +14,12 @@ function EditorLayout() {
             className="shrink bg-[#fcfbf8] h-full min-h-0 relative z-40 flex flex-col overflow-hidden grow-[30] basis-0 caret-[#1c1c1c] [color-scheme:light] inset-x-auto inset-y-0"
           >
             <div className="w-full min-h-0 flex flex-col grow basis-[0%] caret-[#1c1c1c] [color-scheme:light] pl-2 overflow-hidden">
-              <ChatPanel />
-              <PreviewPanel />
+              <div className="flex-1 min-h-0 overflow-hidden">
+                <ChatPanel />
+              </div>
+              <div className="shrink-0">
+                <PreviewPanel />
+              </div>
               <div
                 role="presentation"
                 className="bg-[rgba(252,251,248,0.95)] absolute z-30 flex justify-center items-center opacity-0 caret-[#1c1c1c] [color-scheme:light] pointer-events-none pl-3 inset-0"
