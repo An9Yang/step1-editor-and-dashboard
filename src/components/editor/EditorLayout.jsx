@@ -11,9 +11,9 @@ function EditorLayout() {
         <div className="flex-row w-full h-full min-h-0 relative flex overflow-x-hidden overflow-y-hidden grow basis-[0%] caret-[#1c1c1c] [color-scheme:light]">
           <div
             id="_r_ai_"
-            className="shrink bg-[#fcfbf8] h-full min-h-0 relative z-40 flex overflow-x-hidden overflow-y-hidden grow-[30] basis-0 caret-[#1c1c1c] [color-scheme:light] inset-x-auto inset-y-0"
+            className="shrink bg-[#fcfbf8] h-full min-h-0 relative z-40 flex flex-col overflow-hidden grow-[30] basis-0 caret-[#1c1c1c] [color-scheme:light] inset-x-auto inset-y-0"
           >
-            <div className="w-full min-h-0 flex flex-col grow basis-[0%] caret-[#1c1c1c] [color-scheme:light] pl-2">
+            <div className="w-full min-h-0 flex flex-col grow basis-[0%] caret-[#1c1c1c] [color-scheme:light] pl-2 overflow-hidden">
               <ChatPanel />
               <PreviewPanel />
               <div

@@ -13,9 +13,9 @@ function EditorPage() {
 
   return (
     <>
-      <div className='bg-[#fcfbf8] text-[#1c1c1c] leading-normal [font-family:CameraPlainVariable,"CameraPlainVariable_Fallback",system-ui,sans-serif] min-h-[1084px] flex flex-col caret-[#1c1c1c] [color-scheme:light]'>
+      <div className='bg-[#fcfbf8] text-[#1c1c1c] leading-normal [font-family:CameraPlainVariable,"CameraPlainVariable_Fallback",system-ui,sans-serif] h-screen flex flex-col caret-[#1c1c1c] [color-scheme:light] overflow-hidden'>
         <div className="min-h-0 flex flex-col grow basis-[0%] caret-[#1c1c1c] [color-scheme:light]">
-          <div className="h-[1084px] flex flex-col caret-[#1c1c1c] [color-scheme:light]">
+          <div className="h-full flex flex-col caret-[#1c1c1c] [color-scheme:light]">
             <div className="w-full sticky z-50 caret-[#1c1c1c] [color-scheme:light] top-0 bottom-auto inset-x-auto"></div>
             <div className="bg-[#fcfbf8] min-h-0 flex flex-col grow basis-[0%] caret-[#1c1c1c] [color-scheme:light]">
               <EditorHeader />
