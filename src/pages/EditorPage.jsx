@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Component_1 from '../components/editor/Component_1';
-import Component_2 from '../components/editor/Component_2';
-import Component_3 from '../components/editor/Component_3';
+import EditorHeader from '../components/editor/EditorHeader';
+import EditorLayout from '../components/editor/EditorLayout';
+import EditorAuthModal from '../components/editor/EditorAuthModal';
 
 function EditorPage() {
   const { projectId } = useParams();
@@ -18,8 +18,8 @@ function EditorPage() {
           <div className="h-[1084px] flex flex-col caret-[#1c1c1c] [color-scheme:light]">
             <div className="w-full sticky z-50 caret-[#1c1c1c] [color-scheme:light] top-0 bottom-auto inset-x-auto"></div>
             <div className="bg-[#fcfbf8] min-h-0 flex flex-col grow basis-[0%] caret-[#1c1c1c] [color-scheme:light]">
-              <Component_1 />
-              <Component_2 />
+              <EditorHeader />
+              <EditorLayout />
             </div>
           </div>
           <section
@@ -43,7 +43,7 @@ function EditorPage() {
         >
           <div className="bg-white [font-family:Times,system-ui,sans-serif] m-2">
             <div>
-              <Component_3 />
+              <EditorAuthModal />
             </div>
           </div>
         </div>

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import Component_1 from '../components/dashboard/Component_1';
-import Component_2 from '../components/dashboard/Component_2';
-import Component_3 from '../components/dashboard/Component_3';
-import Component_4 from '../components/dashboard/Component_4';
+import MobileHeader from '../components/dashboard/MobileHeader';
+import Sidebar from '../components/dashboard/Sidebar';
+import MainContent from '../components/dashboard/MainContent';
+import AuthModal from '../components/dashboard/AuthModal';
 
 function DashboardPage() {
   useEffect(() => {
@@ -16,9 +16,9 @@ function DashboardPage() {
           <div className="bg-[#fcfbf8] caret-[#1c1c1c] [color-scheme:light]">
             <div className="h-full relative flex flex-col caret-[#1c1c1c] [color-scheme:light]">
               <div className="min-h-0 flex grow basis-[0%] caret-[#1c1c1c] [color-scheme:light]">
-                <Component_1 />
-                <Component_2 />
-                <Component_3 />
+                <MobileHeader />
+                <Sidebar />
+                <MainContent />
               </div>
             </div>
           </div>
@@ -48,7 +48,7 @@ function DashboardPage() {
                 aria-hidden="true"
                 className='leading-normal [font-family:-apple-system,"system-ui","Segoe_UI",Roboto,Helvetica,Arial,sans-serif,"Apple_Color_Emoji","Segoe_UI_Emoji","Segoe_UI_Symbol",system-ui,sans-serif] text-[14px] w-full min-h-full absolute z-[99999] flex overflow-x-hidden flex-col items-center left-0 right-auto top-0 bottom-auto'
               >
-                <Component_4 />
+                <AuthModal />
                 <a
                   href="https://www.netlify.com"
                   className="text-[#a3a9ac] font-medium text-center [white-space-collapse:collapse] [text-wrap-mode:nowrap] w-px h-px absolute block overflow-x-hidden overflow-y-hidden caret-[#a3a9ac] -m-px"
