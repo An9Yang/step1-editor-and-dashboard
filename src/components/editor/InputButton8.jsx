@@ -11,7 +11,7 @@ function InputButton8() {
             data-style-id="style-2-1765953848772"
           >
             <div className="bg-[#f7f4ed] flex items-center gap-y-1 gap-x-1 caret-[#1c1c1c] [color-scheme:light] p-0.5 rounded-br-[8px] rounded-t-[8px] rounded-bl-[8px] border-[#eceae4] border">
-              <button className="bg-[rgba(0,0,0,0)] font-normal text-[12px] [white-space-collapse:collapse] [text-wrap-mode:nowrap] h-5 flex justify-center items-center gap-y-1 gap-x-1 caret-[#1c1c1c] [color-scheme:light] [appearance:button] py-0.5 rounded-br-[6px] rounded-t-[6px] rounded-bl-[6px]">
+              <button className="bg-[rgba(0,0,0,0)] font-normal text-[12px] [white-space-collapse:collapse] [text-wrap-mode:nowrap] h-5 flex justify-center items-center gap-y-1 gap-x-1 caret-[#1c1c1c] [color-scheme:light] [appearance:button] py-0.5 px-1 rounded-br-[6px] rounded-t-[6px] rounded-bl-[6px]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="rgb(28, 28, 28)"

@@ -6,7 +6,7 @@ function InputButton1() {
     >
       <button
         aria-label="Expand tool uses"
-        className="bg-[#fcfbf8] font-normal text-[14px] [white-space-collapse:collapse] [text-wrap-mode:nowrap] h-6 absolute z-10 flex justify-center items-center gap-y-2 gap-x-2 caret-[#1c1c1c] [color-scheme:light] [appearance:button] py-1 rounded-br-[6px] rounded-t-[6px] rounded-bl-[6px] border-[#eceae4] left-auto right-0 top-0 bottom-auto border"
+        className="bg-[#fcfbf8] font-normal text-[14px] [white-space-collapse:collapse] [text-wrap-mode:nowrap] h-6 absolute z-10 flex justify-center items-center gap-y-2 gap-x-2 caret-[#1c1c1c] [color-scheme:light] [appearance:button] py-1 px-2 rounded-br-[6px] rounded-t-[6px] rounded-bl-[6px] border-[#eceae4] left-auto right-0 top-0 bottom-auto border"
       >
         Show all
       </button>
