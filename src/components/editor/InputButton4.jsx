@@ -1,3 +1,21 @@
+import CollapsibleCodeBlock from './CollapsibleCodeBlock';
+
+const sampleCode = `// Hero Section Component
+function HeroSection() {
+  return (
+    <section className="bg-[#ECE9E2] py-16">
+      <div className="container mx-auto text-center">
+        <h1 className="font-serif text-5xl text-[#3D0C1B]">
+          Holiday Sale
+        </h1>
+        <p className="mt-4 text-lg">
+          Up to 40% off select styles
+        </p>
+      </div>
+    </section>
+  );
+}`;
+
 function InputButton4() {
   return (
     <div
@@ -21,6 +39,12 @@ function InputButton4() {
             footer
           </li>
         </ul>
+        <CollapsibleCodeBlock
+          language="jsx"
+          fileName="HeroSection.jsx"
+          lineCount={15}
+          code={sampleCode}
+        />
       </div>
     </div>
   );

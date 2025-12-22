@@ -7,13 +7,13 @@ function MessageContent() {
       className="relative caret-[#1c1c1c] [color-scheme:light]"
       data-component-id="Component_2_1_1_2"
     >
-      <div className="flex flex-col items-start gap-y-2 gap-x-2 caret-[#1c1c1c] [color-scheme:light] pl-4 group">
+      <div className="bg-[#f7f4ed] rounded-[16px] rounded-tr-[4px] flex flex-col items-end gap-y-2 gap-x-2 caret-[#1c1c1c] [color-scheme:light] p-3 group">
         <MessageHeader />
         <MessageText />
-        <div className="w-full flex justify-start gap-y-1 gap-x-1 caret-[#1c1c1c] [color-scheme:light] mt-1">
+        <div className="w-full flex justify-end gap-y-1 gap-x-1 caret-[#1c1c1c] [color-scheme:light] mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
             aria-label="Copy message"
-            className="bg-[rgba(0,0,0,0)] text-[#5f5f5d] text-[16px] flex justify-center items-center opacity-0 caret-[#5f5f5d] [color-scheme:light] [appearance:button] p-1 rounded-br-[6px] rounded-t-[6px] rounded-bl-[6px]"
+            className="bg-[rgba(0,0,0,0)] text-[#5f5f5d] text-[16px] flex justify-center items-center caret-[#5f5f5d] [color-scheme:light] [appearance:button] p-1 rounded-[6px] hover:bg-[#eceae4]"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -21,8 +21,7 @@ function MessageContent() {
               viewBox="0 0 24 24"
               width="100%"
               height="100%"
-              className="text-center align-middle w-4 h-4 block overflow-x-hidden overflow-y-hidden shrink-0 fill-[#5f5f5d] caret-[#5f5f5d] [color-scheme:light]"
-              data-svg-size="780"
+              className="text-center align-middle w-4 h-4 block overflow-hidden shrink-0 fill-[#5f5f5d] caret-[#5f5f5d] [color-scheme:light]"
             >
               <path
                 fill="rgb(95, 95, 93)"

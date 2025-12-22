@@ -40,9 +40,10 @@ function ProjectDropdown() {
               ></path>
             </svg>
           </div>
-          <div className="opacity-100 [text-wrap-mode:nowrap] caret-[#1c1c1c] [color-scheme:light]">
-            <p className="opacity-100 [transform:none] text-[#5f5f5d] text-[12px] text-left text-ellipsis [text-wrap-mode:nowrap] w-full min-w-0 flex overflow-x-hidden overflow-y-hidden caret-[#5f5f5d] [color-scheme:light] my-0">
-              Previewing last saved version
+          <div className="opacity-100 [text-wrap-mode:nowrap] flex items-center gap-x-1.5 caret-[#1c1c1c] [color-scheme:light]">
+            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+            <p className="text-[#5f5f5d] text-[12px] text-left text-ellipsis [text-wrap-mode:nowrap] w-full min-w-0 flex overflow-x-hidden overflow-y-hidden caret-[#5f5f5d] [color-scheme:light] my-0">
+              v1.2.3 - Last saved 2 min ago
             </p>
           </div>
         </div>

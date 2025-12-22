@@ -9,9 +9,11 @@ function ChatPanel() {
     >
       <div className="w-full h-full min-h-0 relative flex flex-col caret-[#1c1c1c] [color-scheme:light]">
         {/* Chat content area - scrollable */}
-        <div className="w-full h-full min-h-0 overflow-y-auto caret-[#1c1c1c] [color-scheme:light] p-4 pb-0">
-          <ChatMessages />
-          <ChatInputArea />
+        <div className="w-full h-full min-h-0 overflow-y-auto caret-[#1c1c1c] [color-scheme:light] px-4 py-6">
+          <div className="space-y-6">
+            <ChatMessages />
+            <ChatInputArea />
+          </div>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 function MessageHeader() {
   return (
     <div
-      className="w-4/5 max-w-[400px] flex justify-start caret-[#1c1c1c] [color-scheme:light]"
+      className="w-full max-w-[400px] flex justify-end caret-[#1c1c1c] [color-scheme:light]"
       data-component-id="Component_2_1_1_2_1"
     >
       <div className="max-w-full flex flex-wrap justify-end gap-y-2 gap-x-2 caret-[#1c1c1c] [color-scheme:light]">

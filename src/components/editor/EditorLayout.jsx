@@ -1,9 +1,51 @@
+import { useState, useCallback, useRef, useEffect } from 'react';
 import ChatPanel from './ChatPanel';
 import PreviewPanel from './PreviewPanel';
 
 function EditorLayout() {
+  const [leftPanelWidth, setLeftPanelWidth] = useState(30);
+  const [isDragging, setIsDragging] = useState(false);
+  const containerRef = useRef(null);
+
+  const handleMouseDown = useCallback((e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  }, []);
+
+  const handleMouseMove = useCallback((e) => {
+    if (!isDragging || !containerRef.current) return;
+
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const newWidth = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+
+    // Limit the width between 20% and 60%
+    const clampedWidth = Math.min(Math.max(newWidth, 20), 60);
+    setLeftPanelWidth(clampedWidth);
+  }, [isDragging]);
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      document.body.style.cursor = 'col-resize';
+      document.body.style.userSelect = 'none';
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    };
+  }, [isDragging, handleMouseMove, handleMouseUp]);
+
   return (
     <main
+      ref={containerRef}
       className="min-h-0 relative flex grow basis-[0%] isolate caret-[#1c1c1c] [color-scheme:light]"
       data-component-id="Component_2"
     >
@@ -11,7 +53,8 @@ function EditorLayout() {
         <div className="flex-row w-full h-full min-h-0 relative flex overflow-x-hidden overflow-y-hidden grow basis-[0%] caret-[#1c1c1c] [color-scheme:light]">
           <div
             id="_r_ai_"
-            className="shrink bg-[#fcfbf8] h-full min-h-0 relative z-40 flex flex-col overflow-hidden grow-[30] basis-0 caret-[#1c1c1c] [color-scheme:light] inset-x-auto inset-y-0"
+            style={{ width: `${leftPanelWidth}%` }}
+            className="shrink-0 bg-[#fcfbf8] h-full min-h-0 relative z-40 flex flex-col overflow-hidden caret-[#1c1c1c] [color-scheme:light] inset-x-auto inset-y-0"
           >
             <div className="w-full min-h-0 flex flex-col grow basis-[0%] caret-[#1c1c1c] [color-scheme:light] pl-2 overflow-hidden">
               <div className="flex-1 min-h-0 overflow-hidden">
@@ -53,11 +96,13 @@ function EditorLayout() {
           <div
             role="separator"
             tabIndex="0"
-            className="touch-none [-webkit-mask-position-x:0%] [-webkit-mask-position-y:0%] [mask-size:auto] [mask-repeat:repeat] [mask-origin:border-box] [mask-clip:border-box] [mask-composite:add] [mask-mode:match-source] w-0.5 relative z-[10000] flex justify-center items-center [mask-image:linear-gradient(rgba(0,0,0,0)_0%,rgb(255,255,255)_15%,rgb(255,255,255)_80%,rgba(0,0,0,0)_100%)] caret-[#1c1c1c] [color-scheme:light] select-none ml-2 -mr-px mt-3 mb-5 rounded-br-full rounded-t-full rounded-bl-full"
+            onMouseDown={handleMouseDown}
+            className={`w-1 hover:w-1.5 bg-transparent hover:bg-[#e0ddd6] relative z-[10000] flex justify-center items-center cursor-col-resize transition-all duration-150 caret-[#1c1c1c] [color-scheme:light] select-none mx-1 my-3 rounded-full ${isDragging ? 'w-1.5 bg-[#d0cdc6]' : ''}`}
           ></div>
           <div
             id="preview-panel"
-            className="shrink relative flex overflow-x-hidden overflow-y-hidden flex-col grow-[70] basis-0 caret-[#1c1c1c] [color-scheme:light] pr-2 pb-2"
+            style={{ width: `${100 - leftPanelWidth}%` }}
+            className="shrink-0 relative flex overflow-x-hidden overflow-y-hidden flex-col caret-[#1c1c1c] [color-scheme:light] pr-2 pb-2"
           >
             <div className="flex overflow-x-hidden overflow-y-hidden flex-col grow caret-[#1c1c1c] [color-scheme:light] rounded-br-[12px] rounded-t-[12px] rounded-bl-[12px] border-[#eceae4] border">
               <div className="relative flex flex-col grow items-center caret-[#1c1c1c] [color-scheme:light]">

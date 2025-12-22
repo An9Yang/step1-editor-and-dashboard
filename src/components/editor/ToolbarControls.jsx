@@ -1,12 +1,14 @@
 import RefreshButton from './RefreshButton';
 import ScreenModeDropdown from './ScreenModeDropdown';
+import ViewModeToggle from './ViewModeToggle';
 
 function ToolbarControls() {
   return (
     <div
-      className="[text-wrap-mode:nowrap] flex items-center gap-y-1 gap-x-1 caret-[#1c1c1c] [color-scheme:light]"
+      className="[text-wrap-mode:nowrap] flex items-center gap-x-3 caret-[#1c1c1c] [color-scheme:light]"
       data-component-id="Component_1_2"
     >
+      <ViewModeToggle />
       <div className="[text-wrap-mode:nowrap] flex items-center gap-y-1 gap-x-1 caret-[#1c1c1c] [color-scheme:light]">
         <RefreshButton />
         <ScreenModeDropdown />
