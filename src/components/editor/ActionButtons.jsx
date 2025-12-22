@@ -74,20 +74,22 @@ function ActionButtons() {
       </button>
 
       {isOpen && (
-        <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-[12px] shadow-lg border border-[#eceae4] py-2 z-50">
+        <div className="absolute top-full right-0 mt-1.5 w-52 bg-[#fcfbf8] rounded-[8px] shadow-[0_4px_16px_rgba(0,0,0,0.08)] border border-[#eceae4] py-1.5 z-50">
           {shareOptions.map((option, index) => (
             <button
               key={index}
-              className="w-full text-left px-4 py-2 text-[14px] flex items-center gap-x-2.5 hover:bg-[#f7f4ed] transition-colors"
+              className="w-full text-left px-3 py-2 text-[14px] flex items-center gap-x-2.5 hover:bg-[#f7f4ed] transition-colors mx-1.5 rounded-[6px]"
+              style={{ width: 'calc(100% - 12px)' }}
               onClick={() => setIsOpen(false)}
             >
               <option.icon />
               <span>{option.label}</span>
             </button>
           ))}
-          <div className="border-t border-[#eceae4] my-2"></div>
+          <div className="border-t border-[#eceae4] my-1.5 mx-3"></div>
           <button
-            className="w-full text-left px-4 py-2 text-[14px] flex items-center gap-x-2.5 hover:bg-[#f7f4ed] transition-colors text-[#5f5f5d]"
+            className="w-full text-left px-3 py-2 text-[14px] flex items-center gap-x-2.5 hover:bg-[#f7f4ed] transition-colors text-[#5f5f5d] mx-1.5 rounded-[6px]"
+            style={{ width: 'calc(100% - 12px)' }}
             onClick={() => setIsOpen(false)}
           >
             <SettingsIcon />

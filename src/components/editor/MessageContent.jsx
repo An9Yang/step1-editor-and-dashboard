@@ -7,7 +7,7 @@ function MessageContent() {
       className="relative caret-[#1c1c1c] [color-scheme:light]"
       data-component-id="Component_2_1_1_2"
     >
-      <div className="bg-[#f7f4ed] rounded-[16px] rounded-tr-[4px] flex flex-col items-end gap-y-2 gap-x-2 caret-[#1c1c1c] [color-scheme:light] p-3 group">
+      <div className="bg-[#f7f4ed] rounded-[16px] rounded-tr-[4px] flex flex-col items-end gap-y-2 gap-x-2 caret-[#1c1c1c] [color-scheme:light] px-4 py-3.5 group">
         <MessageHeader />
         <MessageText />
         <div className="w-full flex justify-end gap-y-1 gap-x-1 caret-[#1c1c1c] [color-scheme:light] mt-1 opacity-0 group-hover:opacity-100 transition-opacity">

@@ -30,7 +30,7 @@ function ChatInputArea() {
         </div>
         {/* AI Response Container with visual styling */}
         <div className="max-w-[85%] caret-[#1c1c1c] [color-scheme:light]">
-          <div className="relative bg-[#f7f4ed] rounded-[16px] rounded-tl-[4px] p-3 caret-[#1c1c1c] [color-scheme:light]">
+          <div className="relative bg-[#f7f4ed] rounded-[16px] rounded-tl-[4px] px-4 py-3.5 caret-[#1c1c1c] [color-scheme:light]">
             <div className="[overflow-wrap:anywhere] leading-[22px] text-left flex flex-col caret-[#1c1c1c] [color-scheme:light]">
               <div className="text-[#5f5f5d] flex flex-col caret-[#5f5f5d] [color-scheme:light]">
                 <div className="font-[480] text-[14px] [white-space-collapse:collapse] [text-wrap-mode:nowrap] h-6 flex items-center caret-[#5f5f5d] [color-scheme:light]">
