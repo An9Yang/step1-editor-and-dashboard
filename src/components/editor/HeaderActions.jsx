@@ -13,14 +13,6 @@ function HeaderActions() {
           type="button"
           className="bg-[#f7f4ed] font-[480] text-[14px] [text-wrap-mode:nowrap] h-7 flex justify-center items-center gap-x-1.5 shadow-[rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0)_0px_0px_0px_0px,rgba(0,0,0,0.05)_0px_1px_2px_0px] caret-[#1c1c1c] [color-scheme:light] [appearance:button] px-2.5 py-1 rounded-[6px]"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="rgb(28, 28, 28)"
-            viewBox="0 0 24 24"
-            className="w-3.5 h-3.5 block shrink-0 fill-[#1c1c1c]"
-          >
-            <path d="M12 3.25a.75.75 0 0 1 .75.75v9.19l2.72-2.72a.75.75 0 1 1 1.06 1.06l-4 4a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 1 1 1.06-1.06l2.72 2.72V4a.75.75 0 0 1 .75-.75M5.25 18A.75.75 0 0 1 6 17.25h12a.75.75 0 0 1 0 1.5H6a.75.75 0 0 1-.75-.75" />
-          </svg>
           <span className="text-center">Export</span>
         </button>
         <button

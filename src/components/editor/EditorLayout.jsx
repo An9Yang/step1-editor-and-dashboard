@@ -1,11 +1,13 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import ChatPanel from './ChatPanel';
 import PreviewPanel from './PreviewPanel';
+import VisualEditorPanel from './VisualEditorPanel';
 
-function EditorLayout() {
+function EditorLayout({ activeMode, onModeChange }) {
   const [leftPanelWidth, setLeftPanelWidth] = useState(30);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef(null);
+  // ... rest of file (should rely on start line)
 
   const handleMouseDown = useCallback((e) => {
     e.preventDefault();
@@ -58,7 +60,11 @@ function EditorLayout() {
           >
             <div className="w-full min-h-0 flex flex-col grow basis-[0%] caret-[#1c1c1c] [color-scheme:light] pl-2 overflow-hidden">
               <div className="flex-1 min-h-0 overflow-hidden">
-                <ChatPanel />
+                {activeMode === 'design' ? (
+                  <VisualEditorPanel onBackToChat={() => onModeChange('preview')} />
+                ) : (
+                  <ChatPanel />
+                )}
               </div>
               <div className="shrink-0">
                 <PreviewPanel />

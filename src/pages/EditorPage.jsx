@@ -7,6 +7,10 @@ import EditorAuthModal from '../components/editor/EditorAuthModal';
 function EditorPage() {
   const { projectId } = useParams();
 
+  // 'preview' = Chat Mode (Default)
+  // 'design' = Visual Editor Mode
+  const [viewMode, setViewMode] = React.useState('preview');
+
   useEffect(() => {
     console.log('[React] Editor DOM rendered for project:', projectId);
   }, [projectId]);
@@ -18,8 +22,8 @@ function EditorPage() {
           <div className="h-full flex flex-col caret-[#1c1c1c] [color-scheme:light]">
             <div className="w-full sticky z-50 caret-[#1c1c1c] [color-scheme:light] top-0 bottom-auto inset-x-auto"></div>
             <div className="bg-[#fcfbf8] min-h-0 flex flex-col grow basis-[0%] caret-[#1c1c1c] [color-scheme:light]">
-              <EditorHeader />
-              <EditorLayout />
+              <EditorHeader activeMode={viewMode} onModeChange={setViewMode} />
+              <EditorLayout activeMode={viewMode} onModeChange={setViewMode} />
             </div>
           </div>
           <section

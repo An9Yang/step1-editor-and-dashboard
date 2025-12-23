@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-function ViewModeToggle() {
-  const [activeMode, setActiveMode] = useState('preview');
+function ViewModeToggle({ activeMode, onModeChange }) {
+  // const [activeMode, setActiveMode] = useState('preview'); // Controlled by parent now
 
   // Code icon - </> brackets
   const CodeIcon = ({ active }) => (
@@ -52,12 +52,11 @@ function ViewModeToggle() {
         return (
           <button
             key={mode.id}
-            onClick={() => setActiveMode(mode.id)}
-            className={`font-[480] text-[14px] h-7 inline-flex items-center gap-x-1.5 px-2.5 rounded-[8px] transition-all duration-200 ${
-              isActive
-                ? 'bg-[#d7e5f9] text-[#1c1c1c] border border-[#1e52f1]'
-                : 'bg-[#fcfbf8] text-[#5f5f5d] hover:text-[#1c1c1c] border border-[#eceae4]'
-            }`}
+            onClick={() => onModeChange(mode.id)}
+            className={`font-[480] text-[14px] h-7 inline-flex items-center gap-x-1.5 px-2.5 rounded-[8px] transition-all duration-200 ${isActive
+              ? 'bg-[#d7e5f9] text-[#1c1c1c] border border-[#1e52f1]'
+              : 'bg-[#fcfbf8] text-[#5f5f5d] hover:text-[#1c1c1c] border border-[#eceae4]'
+              }`}
           >
             <mode.Icon active={isActive} />
             <span>{mode.label}</span>
