@@ -2,10 +2,15 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import ChatPanel from './ChatPanel';
 import PreviewPanel from './PreviewPanel';
 import VisualEditorPanel from './VisualEditorPanel';
+import FileExplorerPanel from './FileExplorerPanel';
+import CodeEditorPanel from './CodeEditorPanel';
+import DesignToolsToolbar from './DesignToolsToolbar';
+import CanvasOverlay from './CanvasOverlay';
 
 function EditorLayout({ activeMode, onModeChange }) {
   const [leftPanelWidth, setLeftPanelWidth] = useState(30);
   const [isDragging, setIsDragging] = useState(false);
+  const [activeTool, setActiveTool] = useState('cursor');
   const containerRef = useRef(null);
   // ... rest of file (should rely on start line)
 
@@ -59,15 +64,85 @@ function EditorLayout({ activeMode, onModeChange }) {
             className="shrink-0 bg-[#fcfbf8] h-full min-h-0 relative z-40 flex flex-col overflow-hidden caret-[#1c1c1c] [color-scheme:light] inset-x-auto inset-y-0"
           >
             <div className="w-full min-h-0 flex flex-col grow basis-[0%] caret-[#1c1c1c] [color-scheme:light] pl-2 overflow-hidden">
-              <div className="flex-1 min-h-0 overflow-hidden">
-                {activeMode === 'design' ? (
-                  <VisualEditorPanel onBackToChat={() => onModeChange('preview')} />
-                ) : (
-                  <ChatPanel />
-                )}
-              </div>
+              {activeMode === 'design' ? (
+                <VisualEditorPanel onBackToChat={() => onModeChange('preview')} />
+              ) : (
+                <ChatPanel />
+              )}
               <div className="shrink-0">
-                <PreviewPanel />
+                {/* Only show Preview specific panels here if needed, but PreviewPanel is usually on the right in other designs. 
+                    Wait, looking at original code: PreviewPanel seems to be in the LEFT panel at the bottom? 
+                    Ah, re-reading original code:
+                    line 69: <div className="shrink-0">
+                    line 70:   <PreviewPanel />
+                    line 71: </div>
+                    Wait, PreviewPanel contains the iframe? 
+                    Let's re-read line 110: id="preview-panel" ...
+                    Line 121 iframe src...
+                    
+                    The original code had `PreviewPanel` imported on line 3, and used on line 70.
+                    BUT, there is also an iframe on line 118-125 inside the RIGHT panel.
+                    
+                    The `PreviewPanel` component (line 33 of previous `view_file`) contains `PreviewIframe` component.
+                    
+                    Wait, let's check `PreviewPanel` content again (Step 33).
+                    It imports `PreviewIframe`.
+                    And `PreviewIframe.jsx` probably contains the iframe.
+                    
+                    The code I saw in `EditorLayout.jsx` (Step 7) lines 109-130 has a hardcoded iframe!
+                    It does NOT seem to use `PreviewPanel` in the right panel.
+                    It uses `PreviewPanel` in the LEFT panel (line 70).
+                    
+                    This is confusing. Let's check `PreviewPanel` usage again.
+                    In Step 7:
+                    Line 70: <PreviewPanel /> inside the LEFT panel (width controlled by `leftPanelWidth`).
+                    
+                    Line 109: right panel `id="preview-panel"`. Contains an iframe.
+                    
+                    If `PreviewPanel` is in the left sidebar, that's weird for an iframe.
+                    Let's re-read `PreviewPanel.jsx` (Step 33).
+                    It has `PreviewIframe` and `ComponentToolbar`.
+                    
+                    Let's check `PreviewIframe.jsx`.
+                 */}
+                {/* Hiding 'PreviewPanel' (which seems to conform to the old 'suggested steps' container?) 
+                      The user request says: "Suggested Next Steps" module is in the chart part.
+                      And "Design Mode ... fully hide suggested next steps".
+                      
+                      If `PreviewPanel` corresponds to the bottom of the left sidebar, and contains `ComponentToolbar` (Suggested Steps) and `PreviewIframe`,
+                      then hiding it in Design Mode makes sense if we want to hide Suggested Steps.
+                      BUT, if it also contains `PreviewIframe`, do we want to hide the iframe?
+                      The right panel ALSO has an iframe.
+                      
+                      Let's assume the Right Panel is the MAIN preview.
+                      The Left Panel 'PreviewPanel' might be a mini-preview or a misnomer?
+                      
+                      Let's simply hide it in 'design' and 'code' modes for now, 
+                      or use the `showToolbar` prop if we want to keep `PreviewIframe` but hide toolbar.
+                      However, in 'design' mode the left panel is `VisualEditorPanel`.
+                      In 'code' mode the left panel is `FileExplorerPanel`.
+                      
+                      So, we should probably ONLY show `PreviewPanel` (as a bottom component of left sidebar) in `preview` path?
+                      OR, does `ChatPanel` take up the full height?
+                      Line 66: <ChatPanel />
+                      Line 53: flex column.
+                      
+                      If I look at line 62: `flex-1 min-h-0 overflow-hidden`.
+                      This wraps the Chat/VisualEditor.
+                      Line 69: `shrink-0`. Wraps `PreviewPanel`.
+                      
+                      So `PreviewPanel` is ALWAYS at the bottom of the left sidebar.
+                      
+                      If I am in Design Mode, I want `VisualEditorPanel` to take up the whole space?
+                      User request: "Design Mode logic: ... completely hide the Suggested Next Steps module (which belongs to the Chart part)".
+                      
+                      The `ComponentToolbar` (Suggested Steps) is inside `PreviewPanel`.
+                      So in Design Mode, we should NOT render `ComponentToolbar`.
+                      Or perhaps we should NOT render `PreviewPanel` at all if it's just that?
+                      
+                      Let's conditionally render it.
+                  */}
+                {activeMode !== 'design' && <PreviewPanel showToolbar={true} />}
               </div>
               <div
                 role="presentation"
@@ -110,23 +185,49 @@ function EditorLayout({ activeMode, onModeChange }) {
             style={{ width: `${100 - leftPanelWidth}%` }}
             className="shrink-0 relative flex overflow-x-hidden overflow-y-hidden flex-col caret-[#1c1c1c] [color-scheme:light] pr-2 pb-2"
           >
-            <div className="flex overflow-x-hidden overflow-y-hidden flex-col grow caret-[#1c1c1c] [color-scheme:light] rounded-br-[12px] rounded-t-[12px] rounded-bl-[12px] border-[#eceae4] border">
-              <div className="relative flex flex-col grow items-center caret-[#1c1c1c] [color-scheme:light]">
-                <div className="w-full h-full flex flex-col justify-center caret-[#1c1c1c] [color-scheme:light]">
-                  <div className="w-full h-full relative caret-[#1c1c1c] [color-scheme:light]">
-                    <div className="absolute caret-[#1c1c1c] [color-scheme:light] inset-0">
-                      <iframe
-                        sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-downloads allow-popups"
-                        id="static-preview-panel"
-                        src="https://id-preview--7165092c-0ecd-4708-b61d-b85f62e702a2.lovable.app/?__lovable_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiR2FEQTZEZGFOdVV5UjZIRFRxQnZHQVFDeWllMiIsInByb2plY3RfaWQiOiI3MTY1MDkyYy0wZWNkLTQ3MDgtYjYxZC1iODVmNjJlNzAyYTIiLCJub25jZSI6IjNiMWJjNjU0OTE5MWQ2MjRkZmQxZjY0MDJkMjQxZTMxIiwiaXNzIjoibG92YWJsZS1hcGkiLCJzdWIiOiI3MTY1MDkyYy0wZWNkLTQ3MDgtYjYxZC1iODVmNjJlNzAyYTIiLCJhdWQiOlsibG92YWJsZS1hcHAiXSwiZXhwIjoxNzY2NTU4NTg3LCJuYmYiOjE3NjU5NTM3ODcsImlhdCI6MTc2NTk1Mzc4N30.qIPzT-Tnt9S0pJMBUkBzDAQSZGyPIxlPiOgeIesQTdw"
-                        data-sd-iframe-type="cross-origin"
-                        data-sd-iframe-src="https://id-preview--7165092c-0ecd-4708-b61d-b85f62e702a2.lovable.app/?__lovable_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiR2FEQTZEZGFOdVV5UjZIRFRxQnZHQVFDeWllMiIsInByb2plY3RfaWQiOiI3MTY1MDkyYy0wZWNkLTQ3MDgtYjYxZC1iODVmNjJlNzAyYTIiLCJub25jZSI6IjNiMWJjNjU0OTE5MWQ2MjRkZmQxZjY0MDJkMjQxZTMxIiwiaXNzIjoibG92YWJsZS1hcGkiLCJzdWIiOiI3MTY1MDkyYy0wZWNkLTQ3MDgtYjYxZC1iODVmNjJlNzAyYTIiLCJhdWQiOlsibG92YWJsZS1hcHAiXSwiZXhwIjoxNzY2NTU4NTg3LCJuYmYiOjE3NjU5NTM3ODcsImlhdCI6MTc2NTk1Mzc4N30.qIPzT-Tnt9S0pJMBUkBzDAQSZGyPIxlPiOgeIesQTdw"
-                        className="align-middle w-full min-h-full overflow-x-clip overflow-y-clip grow caret-[#1c1c1c] [color-scheme:light]"
-                      ></iframe>
+            <div className="flex overflow-x-hidden overflow-y-hidden flex-col grow caret-[#1c1c1c] [color-scheme:light] rounded-br-[12px] rounded-t-[12px] rounded-bl-[12px] border-[#eceae4] border relative">
+              {activeMode === 'code' ? (
+                <div className="flex h-full w-full">
+                  <div className="w-64 shrink-0 h-full">
+                    <FileExplorerPanel />
+                  </div>
+                  <div className="flex-1 h-full min-w-0">
+                    <CodeEditorPanel />
+                  </div>
+                </div>
+              ) : (
+                <div className="relative flex flex-col grow items-center caret-[#1c1c1c] [color-scheme:light]">
+                  {activeMode === 'design' && (
+                    <>
+                      <DesignToolsToolbar
+                        activeTool={activeTool}
+                        onToolChange={setActiveTool}
+                        onFinish={() => {
+                          // Simulate screenshot sync and clean up
+                          console.log('Syncing design annotations to Chart...');
+                          // Maybe flash a success message? For now just switch to preview/chat to show "result"
+                          onModeChange('preview');
+                        }}
+                      />
+                      <CanvasOverlay activeTool={activeTool} />
+                    </>
+                  )}
+                  <div className="w-full h-full flex flex-col justify-center caret-[#1c1c1c] [color-scheme:light]">
+                    <div className="w-full h-full relative caret-[#1c1c1c] [color-scheme:light]">
+                      <div className="absolute caret-[#1c1c1c] [color-scheme:light] inset-0">
+                        <iframe
+                          sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-downloads allow-popups"
+                          id="static-preview-panel"
+                          src="https://id-preview--7165092c-0ecd-4708-b61d-b85f62e702a2.lovable.app/?__lovable_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiR2FEQTZEZGFOdVV5UjZIRFRxQnZHQVFDeWllMiIsInByb2plY3RfaWQiOiI3MTY1MDkyYy0wZWNkLTQ3MDgtYjYxZC1iODVmNjJlNzAyYTIiLCJub25jZSI6IjNiMWJjNjU0OTE5MWQ2MjRkZmQxZjY0MDJkMjQxZTMxIiwiaXNzIjoibG92YWJsZS1hcGkiLCJzdWIiOiI3MTY1MDkyYy0wZWNkLTQ3MDgtYjYxZC1iODVmNjJlNzAyYTIiLCJhdWQiOlsibG92YWJsZS1hcHAiXSwiZXhwIjoxNzY2NTU4NTg3LCJuYmYiOjE3NjU5NTM3ODcsImlhdCI6MTc2NTk1Mzc4N30.qIPzT-Tnt9S0pJMBUkBzDAQSZGyPIxlPiOgeIesQTdw"
+                          data-sd-iframe-type="cross-origin"
+                          data-sd-iframe-src="https://id-preview--7165092c-0ecd-4708-b61d-b85f62e702a2.lovable.app/?__lovable_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiR2FEQTZEZGFOdVV5UjZIRFRxQnZHQVFDeWllMiIsInByb2plY3RfaWQiOiI3MTY1MDkyYy0wZWNkLTQ3MDgtYjYxZC1iODVmNjJlNzAyYTIiLCJub25jZSI6IjNiMWJjNjU0OTE5MWQ2MjRkZmQxZjY0MDJkMjQxZTMxIiwiaXNzIjoibG92YWJsZS1hcGkiLCJzdWIiOiI3MTY1MDkyYy0wZWNkLTQ3MDgtYjYxZC1iODVmNjJlNzAyYTIiLCJhdWQiOlsibG92YWJsZS1hcHAiXSwiZXhwIjoxNzY2NTU4NTg3LCJuYmYiOjE3NjU5NTM3ODcsImlhdCI6MTc2NTk1Mzc4N30.qIPzT-Tnt9S0pJMBUkBzDAQSZGyPIxlPiOgeIesQTdw"
+                          className="align-middle w-full min-h-full overflow-x-clip overflow-y-clip grow caret-[#1c1c1c] [color-scheme:light]"
+                        ></iframe>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
