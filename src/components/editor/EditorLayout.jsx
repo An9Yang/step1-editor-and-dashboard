@@ -218,9 +218,110 @@ function EditorLayout({ activeMode, onModeChange }) {
                         <iframe
                           sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-downloads allow-popups"
                           id="static-preview-panel"
-                          src="https://id-preview--7165092c-0ecd-4708-b61d-b85f62e702a2.lovable.app/?__lovable_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiR2FEQTZEZGFOdVV5UjZIRFRxQnZHQVFDeWllMiIsInByb2plY3RfaWQiOiI3MTY1MDkyYy0wZWNkLTQ3MDgtYjYxZC1iODVmNjJlNzAyYTIiLCJub25jZSI6IjNiMWJjNjU0OTE5MWQ2MjRkZmQxZjY0MDJkMjQxZTMxIiwiaXNzIjoibG92YWJsZS1hcGkiLCJzdWIiOiI3MTY1MDkyYy0wZWNkLTQ3MDgtYjYxZC1iODVmNjJlNzAyYTIiLCJhdWQiOlsibG92YWJsZS1hcHAiXSwiZXhwIjoxNzY2NTU4NTg3LCJuYmYiOjE3NjU5NTM3ODcsImlhdCI6MTc2NTk1Mzc4N30.qIPzT-Tnt9S0pJMBUkBzDAQSZGyPIxlPiOgeIesQTdw"
-                          data-sd-iframe-type="cross-origin"
-                          data-sd-iframe-src="https://id-preview--7165092c-0ecd-4708-b61d-b85f62e702a2.lovable.app/?__lovable_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiR2FEQTZEZGFOdVV5UjZIRFRxQnZHQVFDeWllMiIsInByb2plY3RfaWQiOiI3MTY1MDkyYy0wZWNkLTQ3MDgtYjYxZC1iODVmNjJlNzAyYTIiLCJub25jZSI6IjNiMWJjNjU0OTE5MWQ2MjRkZmQxZjY0MDJkMjQxZTMxIiwiaXNzIjoibG92YWJsZS1hcGkiLCJzdWIiOiI3MTY1MDkyYy0wZWNkLTQ3MDgtYjYxZC1iODVmNjJlNzAyYTIiLCJhdWQiOlsibG92YWJsZS1hcHAiXSwiZXhwIjoxNzY2NTU4NTg3LCJuYmYiOjE3NjU5NTM3ODcsImlhdCI6MTc2NTk1Mzc4N30.qIPzT-Tnt9S0pJMBUkBzDAQSZGyPIxlPiOgeIesQTdw"
+                          srcDoc={`<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_self">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      body { font-family: 'Inter', sans-serif; }
+    </style>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Prevent all links from navigating outside the iframe
+        document.addEventListener('click', function(e) {
+          const link = e.target.closest('a');
+          if (link) {
+            const href = link.getAttribute('href');
+            // Prevent navigation for # links or external links
+            if (href === '#' || href.startsWith('http') || href.startsWith('//')) {
+              e.preventDefault();
+              // For anchor links, scroll to the element if it exists
+              if (href.startsWith('#') && href.length > 1) {
+                const target = document.querySelector(href);
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+              }
+            }
+          }
+        });
+        // Prevent form submissions from navigating
+        document.addEventListener('submit', function(e) {
+          e.preventDefault();
+        });
+      });
+    </script>
+  </head>
+  <body class="bg-white">
+    <!-- Header Component -->
+    <header class="border-b border-gray-100 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center text-white font-bold">P</div>
+            <span class="font-semibold text-xl tracking-tight text-gray-900">Platform</span>
+          </div>
+          <nav class="hidden md:flex items-center space-x-8">
+            <a href="#" class="text-gray-500 hover:text-gray-900 font-medium font-sm">Products</a>
+            <a href="#" class="text-gray-500 hover:text-gray-900 font-medium font-sm">Solutions</a>
+            <a href="#" class="text-gray-500 hover:text-gray-900 font-medium font-sm">Resources</a>
+            <a href="#" class="bg-black text-white px-4 py-2 rounded-lg font-medium text-sm hover:bg-gray-800 transition">Log in</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Hero Component -->
+    <main>
+      <div class="relative pt-20 pb-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 tracking-tight mb-6">
+            Welcome to our platform
+          </h1>
+          <p class="text-xl text-gray-500 max-w-2xl mx-auto mb-10">
+            Build amazing things with us.
+          </p>
+          <div class="flex justify-center gap-4">
+            <button class="bg-blue-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-blue-700 transition shadow-sm">
+              Get Started
+            </button>
+            <button class="bg-white text-gray-700 border border-gray-200 px-8 py-3 rounded-xl font-semibold hover:bg-gray-50 transition">
+              View Documentation
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="p-6 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-white hover:shadow-md transition duration-300">
+            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            </div>
+            <h3 class="font-semibold text-gray-900 mb-2">Fast Performance</h3>
+            <p class="text-sm text-gray-500">Optimized for speed and reliability across all devices.</p>
+          </div>
+          <div class="p-6 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-white hover:shadow-md transition duration-300">
+            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center text-green-600 mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+            </div>
+            <h3 class="font-semibold text-gray-900 mb-2">Customizable</h3>
+            <p class="text-sm text-gray-500">Flexible components that adapt to your brand identity.</p>
+          </div>
+          <div class="p-6 rounded-2xl border border-gray-100 bg-gray-50 hover:bg-white hover:shadow-md transition duration-300">
+            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600 mb-4">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            </div>
+            <h3 class="font-semibold text-gray-900 mb-2">Secure by Default</h3>
+            <p class="text-sm text-gray-500">Enterprise-grade security protecting your data.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>`}
+                          data-sd-iframe-type="same-origin"
+                          data-sd-iframe-src="about:blank"
                           className="align-middle w-full min-h-full overflow-x-clip overflow-y-clip grow caret-[#1c1c1c] [color-scheme:light]"
                         ></iframe>
                       </div>
