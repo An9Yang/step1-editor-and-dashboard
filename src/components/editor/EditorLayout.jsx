@@ -182,16 +182,15 @@ function EditorLayout({ activeMode, onModeChange, historyOpen }) {
           ></div>
           <div
             id="preview-panel"
-            style={{ width: `${100 - leftPanelWidth}%` }}
-            className="shrink-0 relative flex overflow-x-hidden overflow-y-hidden flex-col caret-[#1c1c1c] [color-scheme:light] pr-2 pb-2"
+            className="flex-1 min-w-0 relative flex overflow-x-hidden overflow-y-hidden flex-col caret-[#1c1c1c] [color-scheme:light] pr-2 pb-2"
           >
             <div className="flex overflow-x-hidden overflow-y-hidden flex-col grow caret-[#1c1c1c] [color-scheme:light] rounded-br-[12px] rounded-t-[12px] rounded-bl-[12px] border-[#eceae4] border relative">
               {activeMode === 'code' ? (
-                <div className="flex h-full w-full">
-                  <div className="w-64 shrink-0 h-full">
+                <div className="absolute inset-0 flex">
+                  <div className="w-64 shrink-0 h-full overflow-hidden">
                     <FileExplorerPanel />
                   </div>
-                  <div className="flex-1 h-full min-w-0">
+                  <div className="flex-1 h-full min-w-0 overflow-hidden">
                     <CodeEditorPanel />
                   </div>
                 </div>
