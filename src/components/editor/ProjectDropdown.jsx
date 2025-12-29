@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import SettingsModal from './SettingsModal';
 
 function ProjectDropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const [appearanceSubmenuOpen, setAppearanceSubmenuOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   // Mock data
   const credits = {
@@ -141,7 +143,10 @@ function ProjectDropdown() {
               {/* Settings */}
               <button
                 className="w-full text-left px-4 py-2 text-[13px] text-[#1c1c1c] hover:bg-[#f7f4ed] transition-colors flex items-center justify-between"
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false);
+                  setSettingsOpen(true);
+                }}
               >
                 <div className="flex items-center gap-x-2.5">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-[#5f5f5d]">
@@ -273,6 +278,9 @@ function ProjectDropdown() {
           </div>
         </>
       )}
+
+      {/* Settings Modal */}
+      <SettingsModal isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </div>
   );
 }

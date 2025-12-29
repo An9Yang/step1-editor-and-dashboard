@@ -10,7 +10,7 @@ function HeaderActions() {
       className="[text-wrap-mode:nowrap] flex items-center gap-y-1 gap-x-1 caret-[#1c1c1c] [color-scheme:light]"
       data-component-id="Component_1_4"
     >
-      <div className="[text-wrap-mode:nowrap] relative z-[1000] flex items-center gap-y-1.5 gap-x-1.5 caret-[#1c1c1c] [color-scheme:light]">
+      <div className="[text-wrap-mode:nowrap] relative z-10 flex items-center gap-y-1.5 gap-x-1.5 caret-[#1c1c1c] [color-scheme:light]">
         <ActionButtons />
         <button
           id="export-button"
