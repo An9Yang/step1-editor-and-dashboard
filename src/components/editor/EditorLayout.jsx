@@ -25,8 +25,10 @@ function EditorLayout({ activeMode, onModeChange, historyOpen }) {
     const containerRect = containerRef.current.getBoundingClientRect();
     const newWidth = ((e.clientX - containerRect.left) / containerRect.width) * 100;
 
-    // Limit the width between 20% and 60%
-    const clampedWidth = Math.min(Math.max(newWidth, 20), 60);
+    // Limit the width between 20% and 70%
+    // Min 20%: ensures chat panel has enough space for messages
+    // Max 70%: ensures right panel (preview/code) has at least 30% width
+    const clampedWidth = Math.min(Math.max(newWidth, 20), 70);
     setLeftPanelWidth(clampedWidth);
   }, [isDragging]);
 
@@ -178,7 +180,7 @@ function EditorLayout({ activeMode, onModeChange, historyOpen }) {
             role="separator"
             tabIndex="0"
             onMouseDown={handleMouseDown}
-            className={`w-1 hover:w-1.5 bg-transparent hover:bg-[#e0ddd6] relative z-[10000] flex justify-center items-center cursor-col-resize transition-all duration-150 caret-[#1c1c1c] [color-scheme:light] select-none mx-1 my-3 rounded-full ${isDragging ? 'w-1.5 bg-[#d0cdc6]' : ''}`}
+            className={`w-1.5 hover:w-2 bg-[#eceae4] hover:bg-[#d0cdc6] relative z-[10000] flex justify-center items-center cursor-col-resize transition-all duration-150 caret-[#1c1c1c] [color-scheme:light] select-none mx-0.5 my-3 rounded-full ${isDragging ? 'w-2 bg-[#c0bdb6]' : ''}`}
           ></div>
           <div
             id="preview-panel"
