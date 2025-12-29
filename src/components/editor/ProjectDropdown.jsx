@@ -98,7 +98,7 @@ function ProjectDropdown() {
 
             {/* Workspace Info */}
             <div className="px-4 py-3 border-b border-[#eceae4]">
-              <p className="text-[13px] text-[#5f5f5d] mb-3">HaoCheng's Lovable</p>
+              <p className="text-[13px] text-[#5f5f5d] mb-3">HaoCheng's Step1</p>
 
               {/* Credits Card */}
               <div className="bg-white rounded-[10px] border border-[#eceae4] p-3">

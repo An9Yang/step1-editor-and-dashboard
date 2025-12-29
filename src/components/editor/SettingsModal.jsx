@@ -47,7 +47,7 @@ function SettingsModal({ isOpen, onClose }) {
     {
       category: 'Workspace',
       items: [
-        { id: 'workspace', label: "HaoCheng's Lovable", icon: (
+        { id: 'workspace', label: "HaoCheng's Step1", icon: (
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4">
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
             <polyline points="9 22 9 12 15 12 15 22"></polyline>
@@ -294,6 +294,94 @@ function SettingsModal({ isOpen, onClose }) {
     </div>
   );
 
+  // Render Domains content
+  const renderDomains = () => (
+    <div className="space-y-6">
+      {/* Header with link */}
+      <div className="flex items-center justify-between">
+        <p className="text-[14px] text-[#5f5f5d]">Publish your project to custom domains.</p>
+        <button className="flex items-center gap-x-1.5 px-3 py-1.5 text-[13px] text-[#1c1c1c] border border-[#eceae4] rounded-lg hover:bg-[#f7f4ed] transition-colors">
+          <span>How domains work</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3.5 h-3.5">
+            <path d="M7 17L17 7"></path>
+            <path d="M7 7h10v10"></path>
+          </svg>
+        </button>
+      </div>
+
+      {/* Overview Card */}
+      <div className="bg-[#faf8f5] rounded-xl p-5">
+        <h4 className="text-[15px] font-semibold text-[#1c1c1c] mb-4">Overview</h4>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5 text-[#5f5f5d]">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+            <span className="text-[14px] text-[#1c1c1c]">No URL subdomain</span>
+            <span className="px-2 py-0.5 bg-[#fef3c7] text-[#92400e] text-[12px] font-medium rounded">Unpublished</span>
+          </div>
+          <button className="p-1.5 hover:bg-[#eceae4] rounded-lg transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-[#5f5f5d]">
+              <circle cx="12" cy="5" r="1.5"></circle>
+              <circle cx="12" cy="12" r="1.5"></circle>
+              <circle cx="12" cy="19" r="1.5"></circle>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {/* Domain Options */}
+      <div className="space-y-4">
+        {/* Add existing domain */}
+        <div className="flex items-center justify-between p-4 bg-white border border-[#eceae4] rounded-xl">
+          <div className="flex items-center gap-x-4">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-200 to-amber-300 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6 text-purple-600">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+              </svg>
+            </div>
+            <div>
+              <div className="flex items-center gap-x-2">
+                <span className="text-[14px] font-medium text-[#1c1c1c]">Add existing domain</span>
+                <span className="px-1.5 py-0.5 bg-[#fef3c7] text-[10px] font-medium rounded text-[#92400e]">PRO</span>
+              </div>
+              <p className="text-[13px] text-[#5f5f5d]">Connect a domain you already own.</p>
+            </div>
+          </div>
+          <button className="px-4 py-2 text-[13px] font-medium text-[#1c1c1c] border border-[#1c1c1c] rounded-lg hover:bg-[#f7f4ed] transition-colors">
+            Connect domain
+          </button>
+        </div>
+
+        {/* Purchase new domain */}
+        <div className="flex items-center justify-between p-4 bg-white border border-[#eceae4] rounded-xl">
+          <div className="flex items-center gap-x-4">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-200 to-amber-300 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6 text-purple-600">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+            </div>
+            <div>
+              <div className="flex items-center gap-x-2">
+                <span className="text-[14px] font-medium text-[#1c1c1c]">Purchase new domain</span>
+                <span className="px-1.5 py-0.5 bg-[#fef3c7] text-[10px] font-medium rounded text-[#92400e]">PRO</span>
+              </div>
+              <p className="text-[13px] text-[#5f5f5d]">Buy a new domain through IONOS.</p>
+            </div>
+          </div>
+          <button className="px-4 py-2 text-[13px] font-medium text-[#1c1c1c] border border-[#1c1c1c] rounded-lg hover:bg-[#f7f4ed] transition-colors">
+            Buy new domain
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
   // Render placeholder for other tabs
   const renderPlaceholder = (tabName) => (
     <div className="flex items-center justify-center h-64 text-[#5f5f5d]">
@@ -307,7 +395,7 @@ function SettingsModal({ isOpen, onClose }) {
       case 'project-settings':
         return renderProjectSettings();
       case 'domains':
-        return renderPlaceholder('Domains');
+        return renderDomains();
       case 'knowledge':
         return renderPlaceholder('Knowledge');
       case 'workspace':

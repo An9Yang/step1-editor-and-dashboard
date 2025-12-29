@@ -32,7 +32,7 @@ function ShareProjectModal({ onClose, anchorRef }) {
 
         // Mock data
         const collaborators = [
-            { id: 1, name: "HaoCheng's Lovable", role: 'Can edit', avatar: 'H' },
+            { id: 1, name: "HaoCheng's Step1", role: 'Can edit', avatar: 'H' },
             { id: 2, email: "smile.xuhc@gmail.com", role: 'Owner', avatar: 'https://lh3.googleusercontent.com/a/ACg8ocLTPbwOQImSElqoAA58lISohryAkCnD7tK2wto9KftMFBNMug=s96-c' }
         ];
 
@@ -86,7 +86,7 @@ function ShareProjectModal({ onClose, anchorRef }) {
                                 <div className="w-7 h-7 rounded-full bg-[#be185d] flex items-center justify-center text-white text-[10px] font-medium">
                                     H
                                 </div>
-                                <span className="text-[13px] text-[#1c1c1c]">HaoCheng's Lovable</span>
+                                <span className="text-[13px] text-[#1c1c1c]">HaoCheng's Step1</span>
                             </div>
                             <div className="relative">
                                 <button
