@@ -13,45 +13,85 @@ function EditorLayout({ activeMode, onModeChange, historyOpen }) {
   const [isDragging, setIsDragging] = useState(false);
   const [activeTool, setActiveTool] = useState('cursor');
   const containerRef = useRef(null);
-  // ... rest of file (should rely on start line)
+  const leftPanelRef = useRef(null);
+  const isDraggingRef = useRef(false);
+  const rafRef = useRef(null);
+  const currentWidthRef = useRef(30); // 追踪当前宽度，避免频繁读取 state
 
   const handleMouseDown = useCallback((e) => {
     e.preventDefault();
+    e.stopPropagation();
+    isDraggingRef.current = true;
     setIsDragging(true);
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    // 捕获指针事件，确保快速移动时不丢失
+    e.target.setPointerCapture?.(e.pointerId);
   }, []);
 
   const handleMouseMove = useCallback((e) => {
-    if (!isDragging || !containerRef.current) return;
+    if (!isDraggingRef.current || !containerRef.current || !leftPanelRef.current) return;
 
-    const containerRect = containerRef.current.getBoundingClientRect();
-    const newWidth = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+    // 取消之前的 RAF，避免积压
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+    }
 
-    // Limit the width between 20% and 70%
-    // Min 20%: ensures chat panel has enough space for messages
-    // Max 70%: ensures right panel (preview/code) has at least 30% width
-    const clampedWidth = Math.min(Math.max(newWidth, 20), 70);
-    setLeftPanelWidth(clampedWidth);
-  }, [isDragging]);
+    // 使用 requestAnimationFrame 优化性能
+    rafRef.current = requestAnimationFrame(() => {
+      const containerRect = containerRef.current.getBoundingClientRect();
+      const newWidth = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+      const clampedWidth = Math.min(Math.max(newWidth, 20), 70);
 
-  const handleMouseUp = useCallback(() => {
-    setIsDragging(false);
+      // 直接更新 DOM，绕过 React 的状态更新
+      leftPanelRef.current.style.width = `${clampedWidth}%`;
+      currentWidthRef.current = clampedWidth;
+    });
   }, []);
 
-  useEffect(() => {
-    if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-      document.body.style.cursor = 'col-resize';
-      document.body.style.userSelect = 'none';
+  const handleMouseUp = useCallback((e) => {
+    if (!isDraggingRef.current) return;
+
+    // 取消未完成的 RAF
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
     }
+
+    isDraggingRef.current = false;
+    setIsDragging(false);
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+
+    // 释放指针捕获
+    e.target.releasePointerCapture?.(e.pointerId);
+
+    // 拖拽结束后同步 React state（用于持久化或其他依赖）
+    setLeftPanelWidth(currentWidthRef.current);
+  }, []);
+
+  // 在组件挂载时添加全局事件监听
+  useEffect(() => {
+    // 使用 passive: false 确保可以 preventDefault
+    const options = { passive: false };
+    document.addEventListener('mousemove', handleMouseMove, options);
+    document.addEventListener('mouseup', handleMouseUp);
+    // 添加 pointer 事件以获得更好的跟踪
+    document.addEventListener('pointermove', handleMouseMove, options);
+    document.addEventListener('pointerup', handleMouseUp);
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('pointermove', handleMouseMove);
+      document.removeEventListener('pointerup', handleMouseUp);
       document.body.style.cursor = '';
       document.body.style.userSelect = '';
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
     };
-  }, [isDragging, handleMouseMove, handleMouseUp]);
+  }, [handleMouseMove, handleMouseUp]);
 
   return (
     <main
@@ -62,6 +102,7 @@ function EditorLayout({ activeMode, onModeChange, historyOpen }) {
       <div className="min-h-0 flex grow basis-[0%] caret-[#1c1c1c] [color-scheme:light]">
         <div className="flex-row w-full h-full min-h-0 relative flex overflow-x-hidden overflow-y-hidden grow basis-[0%] caret-[#1c1c1c] [color-scheme:light]">
           <div
+            ref={leftPanelRef}
             id="_r_ai_"
             style={{ width: `${leftPanelWidth}%` }}
             className="shrink-0 bg-[#fcfbf8] h-full min-h-0 relative z-40 flex flex-col overflow-hidden caret-[#1c1c1c] [color-scheme:light] inset-x-auto inset-y-0"
@@ -180,9 +221,12 @@ function EditorLayout({ activeMode, onModeChange, historyOpen }) {
           <div
             role="separator"
             tabIndex="0"
-            onMouseDown={handleMouseDown}
-            className={`w-1.5 hover:w-2 bg-[#eceae4] hover:bg-[#d0cdc6] relative z-[10000] flex justify-center items-center cursor-col-resize transition-all duration-150 caret-[#1c1c1c] [color-scheme:light] select-none mx-0.5 my-3 rounded-full ${isDragging ? 'w-2 bg-[#c0bdb6]' : ''}`}
-          ></div>
+            onPointerDown={handleMouseDown}
+            className="w-4 bg-transparent relative z-10 flex justify-center items-center cursor-col-resize select-none group touch-none"
+          >
+            {/* 仅在 hover 或拖拽时显示细线指示器 */}
+            <div className={`w-0.5 h-16 rounded-full transition-colors duration-150 pointer-events-none ${isDragging ? 'bg-[#c0bdb6]' : 'bg-transparent group-hover:bg-[#d0cdc6]'}`}></div>
+          </div>
           <div
             id="preview-panel"
             className="flex-1 min-w-0 relative flex overflow-x-hidden overflow-y-hidden flex-col caret-[#1c1c1c] [color-scheme:light] pr-2 pb-2"
