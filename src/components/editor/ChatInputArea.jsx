@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import AIResponseCard from './AIResponseCard';
-import CloudActions from './CloudActions';
 
 /**
  * ChatInputArea - AI响应区域
  * 面向非技术用户的简洁展示
+ * 操作按钮已整合到AIResponseCard中，hover时显示
  */
 function ChatInputArea() {
   // 模拟数据 - 实际使用时从props或context获取
@@ -42,8 +42,8 @@ function ChatInputArea() {
 
   return (
     <div className="w-full caret-[#1c1c1c] [color-scheme:light]">
-      {/* AI 响应列表 */}
-      <div className="space-y-4 pb-2">
+      {/* AI 响应列表 - 操作按钮在每条消息hover时显示 */}
+      <div className="space-y-4">
         {responses.map((response) => (
           <AIResponseCard
             key={response.id}
@@ -56,11 +56,6 @@ function ChatInputArea() {
             onFileClick={handleFileClick}
           />
         ))}
-      </div>
-
-      {/* 反馈操作区 */}
-      <div className="mt-2">
-        <CloudActions />
       </div>
     </div>
   );

@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import MessageActions from './MessageActions';
 
 /**
- * AIResponseCard - 简洁的AI响应状态卡片
- * 面向非技术用户：隐藏技术细节，只展示关键信息
+ * AIResponseCard - AI响应卡片
+ * 整体左对齐，操作按钮在气泡外部（与用户消息逻辑一致）
  */
 function AIResponseCard({
   status = 'completed', // 'completed' | 'in_progress' | 'error'
@@ -11,7 +12,6 @@ function AIResponseCard({
   filesChanged = [],
   onFileClick,
   technicalDetails = null,
-  timestamp = '',
 }) {
   const [showFiles, setShowFiles] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
@@ -50,8 +50,15 @@ function AIResponseCard({
 
   const currentStatus = statusConfig[status];
 
+  // 获取可复制的内容
+  const getCopyContent = () => {
+    let content = title;
+    if (summary) content += '\n' + summary;
+    return content;
+  };
+
   return (
-    <div className="w-full">
+    <div className="w-full flex flex-col items-start group">
       {/* AI 头像和标识 */}
       <div className="flex items-center gap-x-2 mb-2">
         <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#6366f1] to-[#8b5cf6] flex items-center justify-center">
@@ -60,9 +67,6 @@ function AIResponseCard({
           </svg>
         </div>
         <span className="text-[14px] font-[480] text-[#5f5f5d]">Step1 AI</span>
-        {timestamp && (
-          <span className="text-[12px] text-[#9a9a98]">{timestamp}</span>
-        )}
       </div>
 
       {/* 响应内容气泡 */}
@@ -156,6 +160,11 @@ function AIResponseCard({
             )}
           </div>
         )}
+      </div>
+
+      {/* 操作按钮 - 气泡外部，hover显示（与用户消息一致） */}
+      <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+        <MessageActions align="left" showFeedback={true} content={getCopyContent()} />
       </div>
     </div>
   );
