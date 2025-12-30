@@ -10,7 +10,7 @@ function SettingsModal({ isOpen, onClose }) {
   const [newSecrets, setNewSecrets] = useState([{ key: '', value: '' }]);
 
   // Plans state
-  const [annualBilling, setAnnualBilling] = useState({ pro: true, builder: true, starter: true });
+  const [billingCycle, setBillingCycle] = useState('annual'); // 'monthly' or 'annual'
 
   // Mock user data
   const userData = {
@@ -23,8 +23,8 @@ function SettingsModal({ isOpen, onClose }) {
     creditsUsed: 34,
     creditsTotal: 50,
     projectsUsed: 104,
-    projectsTotal: 5,
-    nextRenewal: '1/7/2026'
+    projectsTotal: 5, // This looks like a bug in original mock (104/5?), keeping as is or assuming unlimited
+    nextRenewal: 'Jan 7, 2026'
   };
 
   if (!isOpen) return null;
@@ -279,7 +279,8 @@ function SettingsModal({ isOpen, onClose }) {
         annualPrice: 83,
         savings: 200,
         features: ['1000 credits/month', 'Unlimited projects', 'Custom domain', 'Priority support'],
-        highlighted: true
+        highlighted: true,
+        buttonText: 'Upgrade to Pro'
       },
       {
         name: 'Builder',
@@ -288,7 +289,8 @@ function SettingsModal({ isOpen, onClose }) {
         annualPrice: 42,
         savings: 100,
         features: ['500 credits/month', 'Unlimited projects', 'Custom domain', 'Email support'],
-        highlighted: false
+        highlighted: false,
+        buttonText: 'Select Builder'
       },
       {
         name: 'Starter',
@@ -297,94 +299,126 @@ function SettingsModal({ isOpen, onClose }) {
         annualPrice: 17,
         savings: 40,
         features: ['200 credits/month', 'Unlimited projects', 'Custom domain', 'Email support'],
-        highlighted: false
+        highlighted: false,
+        buttonText: 'Select Starter'
       }
     ];
 
+    const isAnnual = billingCycle === 'annual';
+
     return (
-      <div className="space-y-6">
+      <div className="space-y-8">
         {/* Usage Card */}
-        <div className="bg-[#fcfbf8] border border-[#eceae4] rounded-[12px] p-5">
-          <div className="flex items-start justify-between">
-            <div>
-              <h4 className="text-[14px] font-semibold text-[#1c1c1c]">Current Usage</h4>
-              <div className="flex items-center gap-x-5 mt-2">
-                <div className="flex items-center gap-x-2">
-                  <div className="w-2 h-2 rounded-full bg-[#1e52f1]"></div>
-                  <span className="text-[13px] text-[#5f5f5d]">{usageData.creditsUsed}/{usageData.creditsTotal} Credits</span>
-                </div>
-                <div className="flex items-center gap-x-2">
-                  <div className="w-2 h-2 rounded-full bg-[#6366f1]"></div>
-                  <span className="text-[13px] text-[#5f5f5d]">{usageData.projectsUsed}/{usageData.projectsTotal} Projects</span>
-                </div>
+        <div className="bg-[#fcfbf8] border border-[#eceae4] rounded-[16px] p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <h4 className="text-[15px] font-semibold text-[#1c1c1c]">Current Usage</h4>
+            <div className="flex items-center gap-x-2 text-[13px] text-[#5f5f5d] bg-white px-3 py-1.5 rounded-full border border-[#eceae4] shadow-sm">
+              <span>Renews</span>
+              <span className="font-medium text-[#1c1c1c]">{usageData.nextRenewal}</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-[13px]">
+                <span className="text-[#5f5f5d]">Credits</span>
+                <span className="font-medium text-[#1c1c1c]">{usageData.creditsUsed} / {usageData.creditsTotal}</span>
+              </div>
+              <div className="h-2 w-full bg-[#eceae4] rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-[#1e52f1] rounded-full"
+                  style={{ width: `${(usageData.creditsUsed / usageData.creditsTotal) * 100}%` }}
+                />
               </div>
             </div>
-            <div className="text-right">
-              <span className="text-[12px] text-[#9a9a98]">Renews</span>
-              <p className="text-[14px] font-medium text-[#1c1c1c]">{usageData.nextRenewal}</p>
+
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-[13px]">
+                <span className="text-[#5f5f5d]">Projects</span>
+                <span className="font-medium text-[#1c1c1c]">{usageData.projectsUsed} / {usageData.projectsTotal}</span>
+              </div>
+              <div className="h-2 w-full bg-[#eceae4] rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-[#6366f1] rounded-full"
+                  style={{ width: `${(usageData.projectsUsed / usageData.projectsTotal) * 100}%` }}
+                />
+              </div>
             </div>
           </div>
         </div>
 
+        {/* Global Billing Toggle */}
+        <div className="flex justify-center">
+          <div className="bg-[#f7f4ed] p-1 rounded-full flex items-center relative gap-x-1">
+            <button
+              onClick={() => setBillingCycle('monthly')}
+              className={`px-6 py-2 rounded-full text-[14px] font-medium transition-all ${!isAnnual ? 'bg-white text-[#1c1c1c] shadow-sm' : 'text-[#5f5f5d] hover:text-[#1c1c1c]'
+                }`}
+            >
+              Monthly
+            </button>
+            <button
+              onClick={() => setBillingCycle('annual')}
+              className={`px-6 py-2 rounded-full text-[14px] font-medium transition-all flex items-center gap-x-2 ${isAnnual ? 'bg-white text-[#1c1c1c] shadow-sm' : 'text-[#5f5f5d] hover:text-[#1c1c1c]'
+                }`}
+            >
+              <span>Yearly</span>
+              <span className="text-[11px] font-bold text-[#15803d] bg-[#dcfce7] px-2 py-0.5 rounded-full">Save 20%</span>
+            </button>
+          </div>
+        </div>
+
         {/* Plans Grid */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-5">
           {plans.map((plan) => {
-            const planKey = plan.name.toLowerCase();
-            const isAnnual = annualBilling[planKey];
             const price = isAnnual ? plan.annualPrice : plan.monthlyPrice;
 
             return (
               <div
                 key={plan.name}
-                className={`p-5 rounded-[12px] border-2 bg-white transition-all ${
-                  plan.highlighted
-                    ? 'border-[#1c1c1c] shadow-[0_4px_16px_rgba(0,0,0,0.08)]'
-                    : 'border-[#eceae4] hover:border-[#d0cdc6]'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1">
-                  <h4 className="text-[16px] font-semibold text-[#1c1c1c]">{plan.name}</h4>
-                  <span className="px-2 py-0.5 bg-[#dcfce7] text-[#166534] text-[11px] font-medium rounded-[4px]">
-                    Save ${plan.savings}
-                  </span>
-                </div>
-                <p className="text-[13px] text-[#5f5f5d] mb-4">{plan.description}</p>
-
-                <div className="flex items-baseline gap-x-1 mb-3">
-                  <span className="text-[28px] font-bold text-[#1c1c1c]">${price}</span>
-                  <span className="text-[13px] text-[#5f5f5d]">/month</span>
-                </div>
-
-                <div className="flex items-center gap-x-2 mb-4">
-                  <button
-                    onClick={() => setAnnualBilling({ ...annualBilling, [planKey]: !isAnnual })}
-                    className={`relative w-10 h-[22px] rounded-full transition-colors ${isAnnual ? 'bg-[#1e52f1]' : 'bg-[#d4d4d4]'}`}
-                  >
-                    <span className={`absolute top-[2px] left-[2px] w-[18px] h-[18px] bg-white rounded-full shadow-sm transition-transform ${isAnnual ? 'translate-x-[18px]' : ''}`}></span>
-                  </button>
-                  <span className="text-[13px] text-[#1c1c1c]">Annual</span>
-                </div>
-
-                <button
-                  className={`w-full py-2.5 text-[14px] font-medium rounded-[8px] transition-colors ${
-                    plan.highlighted
-                      ? 'bg-[#1c1c1c] text-white hover:bg-[#333]'
-                      : 'border border-[#1c1c1c] text-[#1c1c1c] hover:bg-[#f7f4ed]'
+                className={`p-6 rounded-[20px] transition-all flex flex-col h-full bg-white ${plan.highlighted
+                    ? 'border-2 border-[#1c1c1c] shadow-[0_8px_30px_rgba(0,0,0,0.06)] scale-[1.02]'
+                    : 'border border-[#eceae4] hover:border-[#d0cdc6] hover:shadow-[0_4px_20px_rgba(0,0,0,0.04)]'
                   }`}
-                >
-                  Select Plan
-                </button>
+              >
+                <div className="mb-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="text-[18px] font-bold text-[#1c1c1c]">{plan.name}</h4>
+                    {plan.highlighted && (
+                      <span className="px-2.5 py-1 bg-[#1c1c1c] text-white text-[11px] font-bold rounded-full tracking-wide">
+                        POPULAR
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-[14px] text-[#5f5f5d] leading-relaxed">{plan.description}</p>
+                </div>
 
-                <div className="mt-4 space-y-2">
+                <div className="flex items-baseline gap-x-1 mb-6">
+                  <span className="text-[32px] font-bold text-[#1c1c1c] tracking-tight">${price}</span>
+                  <span className="text-[14px] text-[#9a9a98] font-medium">/month</span>
+                </div>
+
+                <div className="space-y-3.5 mb-8 flex-1">
                   {plan.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-center gap-x-2 text-[13px] text-[#5f5f5d]">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 text-[#1e52f1] shrink-0">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      <span>{feature}</span>
+                    <div key={idx} className="flex items-start gap-x-3 text-[14px] text-[#5f5f5d]">
+                      <div className="mt-0.5 w-4 h-4 rounded-full bg-[#e0fdb6] flex items-center justify-center shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="w-2.5 h-2.5 text-[#3f6212]">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                      </div>
+                      <span className="leading-tight">{feature}</span>
                     </div>
                   ))}
                 </div>
+
+                <button
+                  className={`w-full py-3 text-[14px] font-semibold rounded-[12px] transition-all transform active:scale-[0.98] ${plan.highlighted
+                      ? 'bg-[#1c1c1c] text-white hover:bg-[#333] shadow-md'
+                      : 'bg-[#f7f4ed] text-[#1c1c1c] hover:bg-[#eceae4] border border-transparent hover:border-[#d0cdc6]'
+                    }`}
+                >
+                  {plan.buttonText}
+                </button>
               </div>
             );
           })}
@@ -450,11 +484,10 @@ function SettingsModal({ isOpen, onClose }) {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`w-full text-left px-4 py-2.5 flex items-center gap-x-3 transition-all mx-2 rounded-[8px] ${
-                  activeTab === tab.id
+                className={`w-full text-left px-4 py-2.5 flex items-center gap-x-3 transition-all mx-2 rounded-[8px] ${activeTab === tab.id
                     ? 'bg-white text-[#1e52f1] shadow-sm'
                     : 'text-[#5f5f5d] hover:bg-[#eceae4]'
-                }`}
+                  }`}
                 style={{ width: 'calc(100% - 16px)' }}
               >
                 <span className={activeTab === tab.id ? 'text-[#1e52f1]' : 'text-[#5f5f5d]'}>
