@@ -6,6 +6,7 @@ import FileExplorerPanel from './FileExplorerPanel';
 import CodeEditorPanel from './CodeEditorPanel';
 import DesignToolsToolbar from './DesignToolsToolbar';
 import CanvasOverlay from './CanvasOverlay';
+import Step1Badge from './Step1Badge';
 
 function EditorLayout({ activeMode, onModeChange, historyOpen }) {
   const [leftPanelWidth, setLeftPanelWidth] = useState(30);
@@ -215,6 +216,8 @@ function EditorLayout({ activeMode, onModeChange, historyOpen }) {
                   )}
                   <div className="w-full h-full flex flex-col justify-center caret-[#1c1c1c] [color-scheme:light]">
                     <div className="w-full h-full relative caret-[#1c1c1c] [color-scheme:light]">
+                      {/* Step1 Badge - 右下角悬浮徽章 */}
+                      <Step1Badge />
                       <div className="absolute caret-[#1c1c1c] [color-scheme:light] inset-0">
                         <iframe
                           sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-downloads allow-popups"
