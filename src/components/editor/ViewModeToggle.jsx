@@ -46,20 +46,26 @@ function ViewModeToggle({ activeMode, onModeChange }) {
   ];
 
   return (
-    <div className="flex items-center gap-x-1">
+    <div className="flex items-center gap-x-1 w-[152px] shrink-0">
       {modes.map((mode) => {
         const isActive = activeMode === mode.id;
         return (
           <button
             key={mode.id}
             onClick={() => onModeChange(mode.id)}
-            className={`font-[480] text-[14px] h-7 inline-flex items-center gap-x-1.5 px-2.5 rounded-[8px] transition-all duration-200 ${isActive
-              ? 'bg-[#d7e5f9] text-[#1c1c1c] border border-[#1e52f1]'
-              : 'bg-[#fcfbf8] text-[#5f5f5d] hover:text-[#1c1c1c] border border-[#eceae4]'
+            className={`font-[480] text-[14px] h-7 inline-flex items-center rounded-[8px] transition-all duration-300 ease-out ${isActive
+              ? 'bg-[#d7e5f9] text-[#1c1c1c] border border-[#1e52f1] px-2.5 gap-x-1.5'
+              : 'bg-[#fcfbf8] text-[#5f5f5d] hover:text-[#1c1c1c] hover:bg-[#f7f4ed] border border-[#eceae4] px-2 gap-x-0'
               }`}
           >
             <mode.Icon active={isActive} />
-            <span>{mode.label}</span>
+            <span
+              className={`overflow-hidden transition-all duration-300 ease-out whitespace-nowrap ${
+                isActive ? 'w-auto opacity-100' : 'w-0 opacity-0'
+              }`}
+            >
+              {mode.label}
+            </span>
           </button>
         );
       })}
