@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 
 /**
  * CreditRechargeModal - Credits 充值引导弹窗
  * 当用户 credits 用完时弹出，引导充值
  * 设计风格与 SettingsModal 保持一致
+ * 使用 React Portal 渲染到 document.body，确保覆盖所有元素
  */
 function CreditRechargeModal({ onClose, currentCredits = 0 }) {
   const [selectedPlan, setSelectedPlan] = useState('builder');
@@ -46,9 +48,10 @@ function CreditRechargeModal({ onClose, currentCredits = 0 }) {
     onClose();
   };
 
-  return (
+  // 使用 Portal 渲染到 document.body，脱离组件层级限制
+  const modalContent = (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center"
+      className="fixed inset-0 z-[99999] flex items-center justify-center"
       onClick={handleOverlayClick}
     >
       {/* Backdrop */}
@@ -180,6 +183,9 @@ function CreditRechargeModal({ onClose, currentCredits = 0 }) {
       </div>
     </div>
   );
+
+  // 渲染到 document.body，确保 Modal 在 DOM 最顶层
+  return createPortal(modalContent, document.body);
 }
 
 export default CreditRechargeModal;
