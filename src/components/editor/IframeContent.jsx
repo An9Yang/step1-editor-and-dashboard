@@ -1,4 +1,11 @@
-function IframeContent() {
+function IframeContent({ onSendClick }) {
+  const handleSendClick = (e) => {
+    // 如果有 onSendClick 回调，先调用它（用于检查 credits）
+    if (onSendClick) {
+      onSendClick();
+    }
+  };
+
   return (
     <div
       className="flex items-center gap-y-1 gap-x-1 caret-[#1c1c1c] [color-scheme:light]"
@@ -99,9 +106,9 @@ function IframeContent() {
         </div>
         <button
           id="chatinput-send-message-button"
-          type="submit"
-          disabled
-          className="bg-[#1c1c1c] text-[#fcfbf8] text-[16px] w-6 h-6 flex shrink-0 justify-center items-center opacity-50 caret-[#fcfbf8] [color-scheme:light] [appearance:button] p-0 rounded-br-full rounded-t-full rounded-bl-full"
+          type="button"
+          onClick={handleSendClick}
+          className="bg-[#1c1c1c] text-[#fcfbf8] text-[16px] w-6 h-6 flex shrink-0 justify-center items-center hover:bg-[#333] caret-[#fcfbf8] [color-scheme:light] [appearance:button] p-0 rounded-br-full rounded-t-full rounded-bl-full transition-colors cursor-pointer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
