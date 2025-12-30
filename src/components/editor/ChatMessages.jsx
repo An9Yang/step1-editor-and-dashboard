@@ -1,21 +1,42 @@
-import MessageBubble from './MessageBubble';
-import MessageContent from './MessageContent';
+import UserMessageCard from './UserMessageCard';
+import DateDivider from './DateDivider';
 
+/**
+ * ChatMessages - 用户消息容器
+ * 用户消息整体右对齐，气泡内容左对齐
+ */
 function ChatMessages() {
+  // 模拟数据
+  const userMessage = {
+    avatar: 'https://avatars.githubusercontent.com/u/39055087?v=4',
+    username: 'smile.xuhc@gmail.com',
+    message: '请你参考图片中的html 像素级复原该网站',
+    attachments: [
+      {
+        name: 'Allbirds_cleaned.html',
+        type: 'html',
+      }
+    ],
+  };
+
+  const handleAttachmentClick = (file) => {
+    console.log('Open attachment:', file);
+  };
+
   return (
-    <div
-      className="w-full caret-[#1c1c1c] [color-scheme:light]"
-      data-component-id="Component_2_1_1"
-    >
-      {/* User message - aligned right */}
-      <div
-        id="umsg_01kcfzngbyf26s6xx256bs76f1"
-        className="min-h-[auto] w-full flex flex-col items-end caret-[#1c1c1c] [color-scheme:light] pb-4 group"
-      >
-        <div className="max-w-[80%] space-y-2 caret-[#1c1c1c] [color-scheme:light]">
-          <MessageBubble />
-          <MessageContent />
-        </div>
+    <div className="w-full">
+      {/* 日期分隔条 */}
+      <DateDivider date="Dec 15, 2024" />
+
+      {/* 用户消息 - 整体右对齐 */}
+      <div className="pb-4">
+        <UserMessageCard
+          avatar={userMessage.avatar}
+          username={userMessage.username}
+          message={userMessage.message}
+          attachments={userMessage.attachments}
+          onAttachmentClick={handleAttachmentClick}
+        />
       </div>
     </div>
   );
