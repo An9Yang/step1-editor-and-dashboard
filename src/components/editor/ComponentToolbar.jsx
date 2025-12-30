@@ -1,28 +1,28 @@
 function ComponentToolbar() {
   // Mobile icon
-  const MobileIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgb(28, 28, 28)" className="w-3.5 h-3.5 shrink-0">
+  const MobileIcon = ({ highlight }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5 shrink-0">
       <path d="M7.5 2.25A2.25 2.25 0 0 0 5.25 4.5v15a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-15a2.25 2.25 0 0 0-2.25-2.25zm-.75 2.25a.75.75 0 0 1 .75-.75h9a.75.75 0 0 1 .75.75v15a.75.75 0 0 1-.75.75h-9a.75.75 0 0 1-.75-.75zm3.75 13.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0" />
     </svg>
   );
 
   // Search icon
-  const SearchIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgb(28, 28, 28)" className="w-3.5 h-3.5 shrink-0">
+  const SearchIcon = ({ highlight }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5 shrink-0">
       <path d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5M2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5" />
     </svg>
   );
 
   // Cart icon
-  const CartIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgb(28, 28, 28)" className="w-3.5 h-3.5 shrink-0">
+  const CartIcon = ({ highlight }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5 shrink-0">
       <path d="M2.25 3a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378a2.25 2.25 0 0 1 1.898-1.042h10.473a.75.75 0 0 0 .726-.564l1.5-5.75a.75.75 0 0 0-.726-.936H6.182l-.448-1.68A1.876 1.876 0 0 0 3.92 6H3l-.75-3zm5.25 17.25a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m10.5-1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
     </svg>
   );
 
   // Animation/Sparkle icon
-  const SparkleIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgb(28, 28, 28)" className="w-3.5 h-3.5 shrink-0">
+  const SparkleIcon = ({ highlight }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5 shrink-0">
       <path d="M9.813 2.25a.75.75 0 0 1 .72.54l.902 3.166a3.75 3.75 0 0 0 2.608 2.609l3.166.901a.75.75 0 0 1 0 1.44l-3.166.902a3.75 3.75 0 0 0-2.609 2.608l-.901 3.166a.75.75 0 0 1-1.44 0l-.902-3.166a3.75 3.75 0 0 0-2.608-2.609l-3.166-.901a.75.75 0 0 1 0-1.44l3.166-.902a3.75 3.75 0 0 0 2.609-2.608l.901-3.166a.75.75 0 0 1 .72-.539m8.437 6a.75.75 0 0 1 .72.54l.346 1.212a1.875 1.875 0 0 0 1.305 1.304l1.211.346a.75.75 0 0 1 0 1.44l-1.211.346a1.875 1.875 0 0 0-1.305 1.304l-.346 1.212a.75.75 0 0 1-1.44 0l-.346-1.212a1.875 1.875 0 0 0-1.304-1.304l-1.212-.346a.75.75 0 0 1 0-1.44l1.212-.346a1.875 1.875 0 0 0 1.304-1.304l.346-1.212a.75.75 0 0 1 .72-.54" />
     </svg>
   );
@@ -50,10 +50,10 @@ function ComponentToolbar() {
           <button
             key={index}
             type="button"
-            className={`font-normal text-[14px] h-7 flex items-center gap-x-1.5 select-none px-3 py-2 rounded-[8px] transition-all duration-200 hover:scale-105 whitespace-nowrap shrink-0 ${
+            className={`font-normal text-[14px] h-7 flex items-center gap-x-1.5 select-none px-3 py-2 rounded-[8px] transition-colors whitespace-nowrap shrink-0 ${
               suggestion.highlight
-                ? 'bg-gradient-to-r from-[#e8f0fe] to-[#f0e8fe] border border-[#1e52f1]/20 shadow-sm'
-                : 'bg-[#f7f4ed] hover:bg-[#eceae4]'
+                ? 'bg-[#e8eeff] text-[#1e52f1] border border-[#1e52f1]/15'
+                : 'bg-[#f7f4ed] text-[#1c1c1c] hover:bg-[#eceae4]'
             }`}
           >
             <suggestion.Icon />
