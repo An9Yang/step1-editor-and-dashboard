@@ -3,6 +3,8 @@ import { createPortal } from 'react-dom';
 function ComponentPreviewCard({ component, position }) {
   if (!component) return null;
 
+  const isWide = component.layout === 'wide';
+
   // Adjust position to stay within viewport
   const adjustedPosition = {
     x: Math.min(position.x, window.innerWidth - 300),
@@ -18,8 +20,8 @@ function ComponentPreviewCard({ component, position }) {
         animation: 'fadeSlideDown 150ms ease-out',
       }}
     >
-      {/* Preview Image */}
-      <div className="aspect-[16/10] overflow-hidden bg-[#eceae4]">
+      {/* Preview Image - different aspect ratio for wide components */}
+      <div className={`overflow-hidden bg-[#eceae4] ${isWide ? 'aspect-[16/5]' : 'aspect-[16/10]'}`}>
         <img
           src={component.thumbnail}
           alt={component.name}
@@ -34,9 +36,16 @@ function ComponentPreviewCard({ component, position }) {
           <h3 className="text-[15px] font-semibold text-[#1c1c1c] leading-tight">
             {component.name}
           </h3>
-          <span className="shrink-0 text-[10px] font-medium text-[#9a9a98] bg-[#f7f4ed] px-2 py-0.5 rounded-full">
-            {component.category}
-          </span>
+          <div className="flex items-center gap-1.5 shrink-0">
+            {isWide && (
+              <span className="text-[9px] font-medium text-[#1e52f1] bg-[#e8eeff] px-1.5 py-0.5 rounded">
+                Wide
+              </span>
+            )}
+            <span className="text-[10px] font-medium text-[#9a9a98] bg-[#f7f4ed] px-2 py-0.5 rounded-full">
+              {component.category}
+            </span>
+          </div>
         </div>
 
         {/* Description */}
