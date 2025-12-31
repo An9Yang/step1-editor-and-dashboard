@@ -11,6 +11,7 @@ function EditorPage() {
   // 'design' = Visual Editor Mode
   const [viewMode, setViewMode] = React.useState('preview');
   const [historyOpen, setHistoryOpen] = React.useState(false);
+  const [componentCollectionOpen, setComponentCollectionOpen] = React.useState(false);
 
   useEffect(() => {
     console.log('[React] Editor DOM rendered for project:', projectId);
@@ -23,8 +24,8 @@ function EditorPage() {
           <div className="h-full flex flex-col caret-[#1c1c1c] [color-scheme:light]">
             <div className="w-full sticky z-50 caret-[#1c1c1c] [color-scheme:light] top-0 bottom-auto inset-x-auto"></div>
             <div className="bg-[#fcfbf8] min-h-0 flex flex-col grow basis-[0%] caret-[#1c1c1c] [color-scheme:light]">
-              <EditorHeader activeMode={viewMode} onModeChange={setViewMode} historyOpen={historyOpen} onHistoryToggle={setHistoryOpen} />
-              <EditorLayout activeMode={viewMode} onModeChange={setViewMode} historyOpen={historyOpen} />
+              <EditorHeader activeMode={viewMode} onModeChange={setViewMode} historyOpen={historyOpen} onHistoryToggle={setHistoryOpen} componentCollectionOpen={componentCollectionOpen} onComponentCollectionToggle={setComponentCollectionOpen} />
+              <EditorLayout activeMode={viewMode} onModeChange={setViewMode} historyOpen={historyOpen} componentCollectionOpen={componentCollectionOpen} />
             </div>
           </div>
           <section

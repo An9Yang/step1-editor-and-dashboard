@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import ChatMessages from './ChatMessages';
 import ChatInputArea from './ChatInputArea';
+import ComponentCollection from './ComponentCollection';
 
-function ChatPanel({ historyOpen }) {
+function ChatPanel({ historyOpen, componentCollectionOpen }) {
   const [selectedVersion, setSelectedVersion] = useState(0);
   const [menuOpenId, setMenuOpenId] = useState(null);
 
@@ -16,6 +17,11 @@ function ChatPanel({ historyOpen }) {
     e.stopPropagation();
     setMenuOpenId(menuOpenId === id ? null : id);
   };
+
+  // Component Collection 视图
+  if (componentCollectionOpen) {
+    return <ComponentCollection onInsertReference={(ref) => console.log('Insert reference:', ref)} />;
+  }
 
   // 版本历史视图
   if (historyOpen) {

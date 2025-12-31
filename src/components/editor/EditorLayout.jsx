@@ -8,7 +8,7 @@ import DesignToolsToolbar from './DesignToolsToolbar';
 import CanvasOverlay from './CanvasOverlay';
 import Step1Badge from './Step1Badge';
 
-function EditorLayout({ activeMode, onModeChange, historyOpen }) {
+function EditorLayout({ activeMode, onModeChange, historyOpen, componentCollectionOpen }) {
   const [leftPanelWidth, setLeftPanelWidth] = useState(30);
   const [isDragging, setIsDragging] = useState(false);
   const [activeTool, setActiveTool] = useState('cursor');
@@ -111,7 +111,7 @@ function EditorLayout({ activeMode, onModeChange, historyOpen }) {
               {activeMode === 'design' ? (
                 <VisualEditorPanel onBackToChat={() => onModeChange('preview')} />
               ) : (
-                <ChatPanel historyOpen={historyOpen} />
+                <ChatPanel historyOpen={historyOpen} componentCollectionOpen={componentCollectionOpen} />
               )}
               <div className="shrink-0">
                 {/* Only show Preview specific panels here if needed, but PreviewPanel is usually on the right in other designs. 

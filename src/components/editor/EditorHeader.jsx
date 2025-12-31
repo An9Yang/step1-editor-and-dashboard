@@ -3,7 +3,7 @@ import ToolbarControls from './ToolbarControls';
 import UrlBarContainer from './UrlBarContainer';
 import HeaderActions from './HeaderActions';
 
-function EditorHeader({ activeMode, onModeChange, historyOpen, onHistoryToggle }) {
+function EditorHeader({ activeMode, onModeChange, historyOpen, onHistoryToggle, componentCollectionOpen, onComponentCollectionToggle }) {
   return (
     <nav
       className="w-full h-12 min-h-12 relative flex shrink-0 items-center gap-y-0 gap-x-0 caret-[#1c1c1c] [color-scheme:light] px-4"
@@ -15,6 +15,23 @@ function EditorHeader({ activeMode, onModeChange, historyOpen, onHistoryToggle }
             <div className="[text-wrap-mode:nowrap] w-[30%] flex shrink-0 items-center gap-y-2 gap-x-2 caret-[#1c1c1c] [color-scheme:light]">
               <ProjectDropdown />
               <div className="[text-wrap-mode:nowrap] flex gap-x-1 caret-[#1c1c1c] [color-scheme:light] ml-auto mr-2">
+                {/* Component Collection Toggle Button */}
+                <button
+                  onClick={() => onComponentCollectionToggle(!componentCollectionOpen)}
+                  className={`font-[480] text-[14px] h-7 aspect-square flex justify-center items-center [appearance:button] p-1 rounded-[8px] transition-colors ${componentCollectionOpen ? 'bg-[#1e52f1] text-white' : 'bg-transparent hover:bg-[#f7f4ed]'}`}
+                  title="Component Collection"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill={componentCollectionOpen ? "white" : "rgb(28, 28, 28)"}
+                    viewBox="0 0 24 24"
+                    width="100%"
+                    height="100%"
+                    className="text-center [text-wrap-mode:nowrap] align-middle w-3.5 h-3.5 block overflow-x-hidden overflow-y-hidden shrink-0 pointer-events-none"
+                  >
+                    <path d="M4 5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Zm10 0a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V5ZM4 15a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-4Zm10 0a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-4Z" />
+                  </svg>
+                </button>
                 {/* History Toggle Button */}
                 <button
                   onClick={() => onHistoryToggle(!historyOpen)}
