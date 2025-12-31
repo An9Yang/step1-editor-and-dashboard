@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 
-function SettingsModal({ isOpen, onClose }) {
+function SettingsModal({ isOpen = true, onClose }) {
   const [activeTab, setActiveTab] = useState('project-settings');
   const [projectVisibility, setProjectVisibility] = useState('Public');
   const [visibilityDropdownOpen, setVisibilityDropdownOpen] = useState(false);
@@ -466,8 +467,8 @@ function SettingsModal({ isOpen, onClose }) {
     }
   };
 
-  return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center">
+  const modalContent = (
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center">
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
 
@@ -526,6 +527,8 @@ function SettingsModal({ isOpen, onClose }) {
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 }
 
 export default SettingsModal;

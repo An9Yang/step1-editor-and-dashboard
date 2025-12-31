@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import MobileHeader from '../components/dashboard/MobileHeader';
 import Sidebar from '../components/dashboard/Sidebar';
 import MainContent from '../components/dashboard/MainContent';
 import AuthModal from '../components/dashboard/AuthModal';
+import SettingsModal from '../components/editor/SettingsModal';
 
 function DashboardPage() {
+  const [showSettings, setShowSettings] = useState(false);
+
   useEffect(() => {
     console.log('[React] Dashboard DOM rendered');
   }, []);
@@ -17,7 +20,7 @@ function DashboardPage() {
             <div className="h-full relative flex flex-col caret-[#1c1c1c] [color-scheme:light]">
               <div className="min-h-0 flex grow basis-[0%] caret-[#1c1c1c] [color-scheme:light]">
                 <MobileHeader />
-                <Sidebar />
+                <Sidebar onSettingsClick={() => setShowSettings(true)} />
                 <MainContent />
               </div>
             </div>
@@ -64,6 +67,10 @@ function DashboardPage() {
           </div>
         </div>
       </div>
+      {/* Settings Modal */}
+      {showSettings && (
+        <SettingsModal onClose={() => setShowSettings(false)} />
+      )}
     </>
   );
 }

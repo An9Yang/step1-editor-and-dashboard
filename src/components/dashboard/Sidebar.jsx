@@ -3,7 +3,7 @@ import WorkspaceSelector from './WorkspaceSelector';
 import SidebarNav from './SidebarNav';
 import SidebarUserMenu from './SidebarUserMenu';
 
-function Sidebar() {
+function Sidebar({ onSettingsClick }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const handleSidebarClick = (e) => {
@@ -232,7 +232,7 @@ function Sidebar() {
               </div>
             </button>
           )}
-          <SidebarUserMenu isCollapsed={isCollapsed} />
+          <SidebarUserMenu isCollapsed={isCollapsed} onSettingsClick={onSettingsClick} />
         </div>
       </div>
     </aside>
