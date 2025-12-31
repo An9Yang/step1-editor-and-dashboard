@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 
-function SettingsModal({ isOpen = true, onClose }) {
-  const [activeTab, setActiveTab] = useState('project-settings');
+function SettingsModal({ isOpen = true, onClose, initialTab = 'project-settings' }) {
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [projectVisibility, setProjectVisibility] = useState('Public');
   const [visibilityDropdownOpen, setVisibilityDropdownOpen] = useState(false);
 

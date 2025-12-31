@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
-function SidebarUserMenu({ isCollapsed, onSettingsClick }) {
+function SidebarUserMenu({ isCollapsed, onSettingsClick, onPlansClick }) {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -28,6 +28,8 @@ function SidebarUserMenu({ isCollapsed, onSettingsClick }) {
     setIsOpen(false);
     if (action === 'settings' && onSettingsClick) {
       onSettingsClick();
+    } else if (action === 'plans' && onPlansClick) {
+      onPlansClick();
     } else if (action === 'logout') {
       console.log('Logout clicked');
     }
@@ -93,23 +95,13 @@ function SidebarUserMenu({ isCollapsed, onSettingsClick }) {
             </button>
 
             <button
-              onClick={() => handleMenuItemClick('billing')}
+              onClick={() => handleMenuItemClick('plans')}
               className="w-full px-3 py-2 flex items-center gap-2.5 text-[14px] text-[#1c1c1c] hover:bg-[#f7f4ed] transition-colors text-left"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4 text-[#5f5f5d]">
-                <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
               </svg>
-              Billing
-            </button>
-
-            <button
-              onClick={() => handleMenuItemClick('usage')}
-              className="w-full px-3 py-2 flex items-center gap-2.5 text-[14px] text-[#1c1c1c] hover:bg-[#f7f4ed] transition-colors text-left"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4 text-[#5f5f5d]">
-                <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
-              Usage
+              Plans & Usage
             </button>
           </div>
 

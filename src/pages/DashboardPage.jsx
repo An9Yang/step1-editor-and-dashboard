@@ -7,10 +7,16 @@ import SettingsModal from '../components/editor/SettingsModal';
 
 function DashboardPage() {
   const [showSettings, setShowSettings] = useState(false);
+  const [settingsTab, setSettingsTab] = useState('project-settings');
 
   useEffect(() => {
     console.log('[React] Dashboard DOM rendered');
   }, []);
+
+  const handleOpenSettings = (tab = 'project-settings') => {
+    setSettingsTab(tab);
+    setShowSettings(true);
+  };
 
   return (
     <>
@@ -20,7 +26,7 @@ function DashboardPage() {
             <div className="h-full relative flex flex-col caret-[#1c1c1c] [color-scheme:light]">
               <div className="min-h-0 flex grow basis-[0%] caret-[#1c1c1c] [color-scheme:light]">
                 <MobileHeader />
-                <Sidebar onSettingsClick={() => setShowSettings(true)} />
+                <Sidebar onSettingsClick={() => handleOpenSettings()} onPlansClick={() => handleOpenSettings('plans')} />
                 <MainContent />
               </div>
             </div>
@@ -69,7 +75,7 @@ function DashboardPage() {
       </div>
       {/* Settings Modal */}
       {showSettings && (
-        <SettingsModal onClose={() => setShowSettings(false)} />
+        <SettingsModal onClose={() => setShowSettings(false)} initialTab={settingsTab} />
       )}
     </>
   );
